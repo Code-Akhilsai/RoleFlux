@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+body {
+  font-family: "Geist", sans-serif !important;
+  background-color: #15121b;
+
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6d3bd7 0%, #0566d9 100%);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(109, 59, 215, 0.3);
+}
