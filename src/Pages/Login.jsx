@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const nav = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -128,6 +131,7 @@ export default function Login() {
           <p className="text-center text-white/60 text-sm mt-6">
             Don't have an account?{" "}
             <a
+              onClick={() => nav("/register")}
               href="#"
               className="text-purple-400 hover:text-purple-300 font-semibold transition-colors"
             >
