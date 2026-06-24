@@ -1,6 +1,7 @@
 import { FaSearch } from "react-icons/fa";
 import Logo from "../assets/roleflux_logo.png";
 import FeaturedRoleCard from "../Components/FeaturedRoleCard.jsx";
+import { useNavigate } from "react-router-dom";
 
 const featuredRoles = [
   {
@@ -39,6 +40,8 @@ const featuredRoles = [
 ];
 
 const Home = () => {
+  const nav = useNavigate();
+
   return (
     <>
       {/*Menu bar*/}
@@ -47,7 +50,10 @@ const Home = () => {
           <img src={Logo} className="h-8 rounded-3xl ml-2 lg:h-10 lg:ml-4" />
           <p className="font-bold  text-neutral-300 lg:text-[17px]">RoleFlux</p>
         </div>
-        <button className="btn-primary text-white font-semibold text-[13px] h-8 w-23 rounded-xl mr-1.5 lg:w-26 lg:h-10 lg:text-[14px]">
+        <button
+          onClick={() => nav("/login")}
+          className="btn-primary text-white font-semibold text-[13px] h-8 w-23 rounded-xl mr-1.5 lg:w-26 lg:h-10 lg:text-[14px]"
+        >
           Get Started
         </button>
       </section>
