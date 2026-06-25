@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import logo from "../assets/roleflux_logo.png";
+import "../App.css";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const nav = useNavigate();
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-[#15121b] relative overflow-hidden">
       <div
@@ -14,10 +21,8 @@ const Register = () => {
       <div className="relative w-full max-w-md">
         <div className="p-0.5 rounded-3xl bg-linear-to-br from-white/45 to-white/8 shadow-2xl">
           <div className="rounded-3xl p-8 bg-slate-900/92 backdrop-blur-xl text-gray-200">
-            <div className="mb-7 text-center">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-linear-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                <span className="text-2xl">✦</span>
-              </div>
+            <div className="mb-7 text-center flex flex-col items-center">
+              <img src={logo} className="h-20 w-20 rounded-2xl mb-4" />
               <h1 className="text-2xl font-black">Create account</h1>
               <p className="mt-2.5 text-slate-400 text-sm leading-relaxed">
                 Sign up with your username, email, and password.
@@ -47,20 +52,39 @@ const Register = () => {
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Create a password"
-                  className="w-full h-12 rounded-2xl border border-slate-500/20 bg-slate-800/70 text-gray-200 px-4 outline-none text-sm placeholder-slate-500 shadow-inner focus:border-indigo-500/50 transition"
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Create a password"
+                    className="w-full h-12 rounded-2xl border border-slate-500/20 bg-slate-800/70 text-gray-200 px-4 outline-none text-sm placeholder-slate-500 shadow-inner focus:border-indigo-500/50 transition pr-12"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full h-12 mt-2 border-0 rounded-2xl bg-linear-to-r from-indigo-600 via-purple-500 to-pink-500 text-white text-base font-bold cursor-pointer shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 transition"
+                className="w-full h-12 mt-2 border-0 rounded-2xl btn-primary text-white text-base font-bold cursor-pointer   hover:shadow-purple-500/50 transition"
               >
                 Register
               </button>
+              <p className="text-center text-white/60 text-sm mt-6">
+                Already have an account?{" "}
+                <a
+                  onClick={() => nav("/login")}
+                  href="#"
+                  className="text-purple-400 hover:text-purple-300 font-semibold transition-colors"
+                >
+                  Login
+                </a>
+              </p>
             </form>
           </div>
         </div>
