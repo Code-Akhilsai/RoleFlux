@@ -9,12 +9,49 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const nav = useNavigate();
 
+  const validate = () => {
+    const nextErrors = {};
+
+    if (!email.trim()) {
+      nextErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      nextErrors.email = "Enter a valid email address.";
+    }
+
+    if (!password) {
+      nextErrors.password = "Password is required.";
+    } else if (password.length < 8) {
+      nextErrors.password = "Password must be at least 8 characters.";
+    }
+
+    return nextErrors;
+  };
+
+  const handleChange = (field, value) => {
+    if (field === "email") setEmail(value);
+    if (field === "password") setPassword(value);
+
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      [field]: undefined,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const nextErrors = validate();
+
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
+
     setLoading(true);
+    setErrors({});
     // Handle login logic here
     setTimeout(() => setLoading(false), 1000);
   };
@@ -43,12 +80,16 @@ export default function Login() {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => handleChange("email", e.target.value)}
                   placeholder="Enter your email"
                   className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-purple-500 focus:bg-white/20 transition-all"
+                  aria-invalid={Boolean(errors.email)}
                   required
                 />
               </div>
+              {errors.email ? (
+                <p className="mt-2 text-sm text-red-300">{errors.email}</p>
+              ) : null}
             </div>
 
             {/* Password Input */}
@@ -61,9 +102,10 @@ export default function Login() {
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => handleChange("password", e.target.value)}
                   placeholder="Enter your password"
                   className="w-full pl-10 pr-10 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-purple-500 focus:bg-white/20 transition-all"
+                  aria-invalid={Boolean(errors.password)}
                   required
                 />
                 <button
@@ -78,6 +120,9 @@ export default function Login() {
                   )}
                 </button>
               </div>
+              {errors.password ? (
+                <p className="mt-2 text-sm text-red-300">{errors.password}</p>
+              ) : null}
             </div>
 
             {/* Remember & Forgot */}

@@ -6,8 +6,64 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const nav = useNavigate();
+
+  const validate = () => {
+    const nextErrors = {};
+
+    if (!username.trim()) {
+      nextErrors.username = "Username is required.";
+    } else if (username.trim().length < 3) {
+      nextErrors.username = "Username must be at least 3 characters.";
+    }
+
+    if (!email.trim()) {
+      nextErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      nextErrors.email = "Enter a valid email address.";
+    }
+
+    if (!password) {
+      nextErrors.password = "Password is required.";
+    } else if (password.length < 8) {
+      nextErrors.password = "Password must be at least 8 characters.";
+    }
+
+    return nextErrors;
+  };
+
+  const handleChange = (field, value) => {
+    if (field === "username") setUsername(value);
+    if (field === "email") setEmail(value);
+    if (field === "password") setPassword(value);
+
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      [field]: undefined,
+    }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const nextErrors = validate();
+
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
+
+    setLoading(true);
+    setErrors({});
+    setTimeout(() => setLoading(false), 1000);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-[#15121b] relative overflow-hidden">
       <div
@@ -29,15 +85,24 @@ const Register = () => {
               </p>
             </div>
 
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <label className="text-sm font-semibold">Username</label>
                 <input
                   type="text"
                   name="username"
+                  value={username}
+                  onChange={(event) =>
+                    handleChange("username", event.target.value)
+                  }
                   placeholder="Enter your username"
                   className="w-full h-12 rounded-2xl border border-slate-500/20 bg-slate-800/70 text-gray-200 px-4 outline-none text-sm placeholder-slate-500 shadow-inner focus:border-indigo-500/50 transition"
+                  aria-invalid={Boolean(errors.username)}
+                  required
                 />
+                {errors.username ? (
+                  <p className="text-sm text-red-300">{errors.username}</p>
+                ) : null}
               </div>
 
               <div className="space-y-2">
@@ -45,9 +110,18 @@ const Register = () => {
                 <input
                   type="email"
                   name="email"
+                  value={email}
+                  onChange={(event) =>
+                    handleChange("email", event.target.value)
+                  }
                   placeholder="Enter your email"
                   className="w-full h-12 rounded-2xl border border-slate-500/20 bg-slate-800/70 text-gray-200 px-4 outline-none text-sm placeholder-slate-500 shadow-inner focus:border-indigo-500/50 transition"
+                  aria-invalid={Boolean(errors.email)}
+                  required
                 />
+                {errors.email ? (
+                  <p className="text-sm text-red-300">{errors.email}</p>
+                ) : null}
               </div>
 
               <div className="space-y-2">
@@ -56,8 +130,14 @@ const Register = () => {
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
+                    value={password}
+                    onChange={(event) =>
+                      handleChange("password", event.target.value)
+                    }
                     placeholder="Create a password"
                     className="w-full h-12 rounded-2xl border border-slate-500/20 bg-slate-800/70 text-gray-200 px-4 outline-none text-sm placeholder-slate-500 shadow-inner focus:border-indigo-500/50 transition pr-12"
+                    aria-invalid={Boolean(errors.password)}
+                    required
                   />
                   <button
                     type="button"
@@ -67,13 +147,17 @@ const Register = () => {
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
+                {errors.password ? (
+                  <p className="text-sm text-red-300">{errors.password}</p>
+                ) : null}
               </div>
 
               <button
                 type="submit"
-                className="w-full h-12 mt-2 border-0 rounded-2xl btn-primary text-white text-base font-bold cursor-pointer   hover:shadow-purple-500/50 transition"
+                disabled={loading}
+                className="w-full h-12 mt-2 border-0 rounded-2xl btn-primary text-white text-base font-bold cursor-pointer   hover:shadow-purple-500/50 transition disabled:cursor-not-allowed disabled:opacity-70"
               >
-                Register
+                {loading ? "Registering..." : "Register"}
               </button>
               <p className="text-center text-white/60 text-sm mt-6">
                 Already have an account?{" "}
