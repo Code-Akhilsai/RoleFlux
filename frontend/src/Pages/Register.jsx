@@ -3,7 +3,9 @@ import logo from "../assets/roleflux_logo.png";
 import "../App.css";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
+const backend = import.meta.env.VITE_BACKEND_URL;
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
@@ -49,7 +51,7 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const nextErrors = validate();
@@ -61,7 +63,20 @@ const Register = () => {
 
     setLoading(true);
     setErrors({});
-    setTimeout(() => setLoading(false), 1000);
+
+    const res = await axios.post(`${backend}/api/v1/register`, {
+      username,
+      email,
+      password,
+    });
+
+    if (res.status == 200) {
+      nav("/dashboard");
+    } else {
+      alert("registration is failed");
+    }
+
+    setTimeout(() => setLoading(false), 5000);
   };
 
   return (
