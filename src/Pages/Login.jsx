@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
+import logo from "../assets/roleflux_logo.png";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,10 +23,11 @@ export default function Login() {
     <div className="min-h-screen bg-[#15121b] flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-slate-900/92 backdrop-blur-xl">
         {/* Card */}
-        <div className="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-white/20">
+        <div className=" rounded-2xl shadow-2xl p-8 border-2 border-neutral-500">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">Welcome</h1>
+          <div className="text-center mb-8 flex flex-col items-center">
+            <img src={logo} className="h-20 w-20 rounded-2xl mb-3 -mt-5" />
+            <h1 className="text-4xl font-bold text-white mb-2">Welcome back</h1>
             <p className="text-purple-200 text-sm">Sign in to your account</p>
           </div>
 
