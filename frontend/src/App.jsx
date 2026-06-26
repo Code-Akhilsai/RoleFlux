@@ -4,6 +4,7 @@ import Login from "./Pages/Login.jsx";
 import Register from "./Pages/Register.jsx";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard.jsx";
+import Profile from "./Pages/Profile.jsx";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 }

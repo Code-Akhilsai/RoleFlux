@@ -64,11 +64,15 @@ const Register = () => {
     setLoading(true);
     setErrors({});
 
-    const res = await axios.post(`${backend}/api/v1/register`, {
-      username,
-      email,
-      password,
-    });
+    const res = await axios.post(
+      `${backend}/api/v1/register`,
+      {
+        username,
+        email,
+        password,
+      },
+      { withCredentials: true },
+    );
 
     if (res.status == 200) {
       nav("/dashboard");

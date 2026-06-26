@@ -26,7 +26,11 @@ const registerController = async (req, res) => {
 
   return res
     .status(200)
-    .cookie("token", token, { httpOnly: true })
+    .cookie("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false,
+    })
     .json({ message: "successfully created an account" });
 };
 
