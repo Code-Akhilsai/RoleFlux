@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 import router from "../routes/register.routes.js";
 import Profilerouter from "../routes/profile.routes.js";
 import dbconnection from "../db/dbconnection.js";
+import Login_router from "../routes/login.routes.js";
+import Logout_router from "../routes/logout.routes.js";
 
 dotenv.config();
 
@@ -25,6 +27,8 @@ app.use(cookieParser());
 
 app.use("/api/v1", router);
 app.use("/api/v1", Profilerouter);
+app.use("/api/v1", Login_router);
+app.use("/api/v1", Logout_router);
 
 await dbconnection();
 app.listen(port, () =>

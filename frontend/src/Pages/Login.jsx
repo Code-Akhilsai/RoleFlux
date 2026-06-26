@@ -3,6 +3,8 @@ import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import logo from "../assets/roleflux_logo.png";
+import axios from "axios";
+const backend = import.meta.env.VITE_BACKEND_URL;
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -41,7 +43,7 @@ export default function Login() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const nextErrors = validate();
 
@@ -52,8 +54,23 @@ export default function Login() {
 
     setLoading(true);
     setErrors({});
-    // Handle login logic here
-    setTimeout(() => setLoading(false), 1000);
+
+    const res = await axios.post(
+      `${backend}/api/v1/login`,
+      {
+        email,
+        password,
+      },
+      { withCredentials: true },
+    );
+
+    if (res.status == 200) {
+      nav("/dashboard");
+    } else {
+      alert("Login is failed");
+    }
+
+    setTimeout(() => setLoading(false), 4000);
   };
 
   return (
