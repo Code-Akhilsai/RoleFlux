@@ -9,6 +9,8 @@ import logo from "../assets/roleflux_logo.png";
 import profile from "../assets/profile.png";
 import { useState } from "react";
 import Profilebox from "../Components/Profilebox";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const navigationLinks = ["Find Jobs", "Companies", "Resources"];
 
@@ -60,9 +62,37 @@ const JobMeta = ({ icon: Icon, children }) => (
     {children}
   </span>
 );
+const backend = import.meta.env.VITE_BACKEND_URL;
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
+  const nav = useNavigate();
+
+  const profileNav = async () => {
+    const res = await axios.get(`${backend}/api/v1/profile`, {
+      withCredentials: true,
+    });
+
+    if (res.status == 200) return nav("/profile");
+    else return alert("Internal server error");
+  };
+
+  const handlelogout = async () => {
+    try {
+      const res = await axios.post(`${backend}/api/v1/logout`, null, {
+        withCredentials: true,
+      });
+      if (res.status === 200) {
+        alert("Logout successful");
+        return nav("/");
+      } else {
+        alert("Logout failed");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      alert("An error occurred during logout");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#0b0b10] text-white">
@@ -94,7 +124,10 @@ const Dashboard = () => {
 
             {open ? (
               <div className="absolute right-0 top-[calc(100%+0.75rem)] z-50">
-                <Profilebox />
+                <Profilebox
+                  profileNav={profileNav}
+                  handlelogout={handlelogout}
+                />
               </div>
             ) : null}
           </div>
