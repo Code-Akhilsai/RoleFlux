@@ -5,6 +5,8 @@ import {
   Search,
   ShieldCheck,
 } from "lucide-react";
+import logo from "../assets/roleflux_logo.png";
+import profile from "../assets/profile.png";
 
 const navigationLinks = ["Find Jobs", "Companies", "Resources"];
 
@@ -64,39 +66,13 @@ const Dashboard = () => {
         <div className="mx-auto flex h-16 max-w-360 items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-10">
           <div className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-md border border-white/10 bg-[#15141c] shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
-              <span className="text-[0.7rem] font-black tracking-tight text-[#8ea4ff]">
-                RF
-              </span>
+              <img src={logo} />
             </div>
             <span className="text-[1.05rem] font-semibold tracking-[-0.04em] text-white/92">
               RoleFlux
             </span>
           </div>
-
-          <nav className="hidden items-center gap-7 md:flex">
-            {navigationLinks.map((link, index) => (
-              <a
-                key={link}
-                href="#"
-                className={`text-sm font-semibold transition ${
-                  index === 0
-                    ? "border-b border-[#a995ff] pb-1 text-[#d9cbff]"
-                    : "text-white/72 hover:text-white"
-                }`}
-              >
-                {link}
-              </a>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <button className="hidden text-sm font-semibold text-white/80 transition hover:text-white sm:inline-flex">
-              Sign In
-            </button>
-            <button className="btn-primary inline-flex h-9 items-center rounded-md px-4 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(101,92,255,0.28)] sm:px-5">
-              Post a Job
-            </button>
-          </div>
+          <img src={profile} className="h-8 rounded-3xl  md:h-10 lg:-mx-6" />
         </div>
       </header>
 
@@ -247,7 +223,7 @@ const Dashboard = () => {
       </main>
 
       <footer className="border-t border-white/8 bg-[#0b0b10] px-4 py-8 sm:px-6 lg:px-8 xl:px-10">
-        <div className="mx-auto flex max-w-360 flex-col gap-4 text-sm text-white/48 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mx-auto flex max-w-360 flex-col gap-4 text-sm text-center text-white/48 sm:flex-row sm:items-center sm:justify-between">
           <p>RoleFlux — precision-matched opportunities for builders.</p>
           <p>© 2026 RoleFlux</p>
         </div>
