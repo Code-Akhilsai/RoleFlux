@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 import logo from "../assets/roleflux_logo.png";
 import profile from "../assets/profile.png";
+import { useState } from "react";
+import Profilebox from "../Components/Profilebox";
 
 const navigationLinks = ["Find Jobs", "Companies", "Resources"];
 
@@ -60,6 +62,8 @@ const JobMeta = ({ icon: Icon, children }) => (
 );
 
 const Dashboard = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-[#0b0b10] text-white">
       <header className="border-b border-white/8 bg-[#0b0b10]/95 backdrop-blur supports-backdrop-filter:bg-[#0b0b10]/85">
@@ -72,7 +76,28 @@ const Dashboard = () => {
               RoleFlux
             </span>
           </div>
-          <img src={profile} className="h-8 rounded-3xl  md:h-10 lg:-mx-6" />
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpen((current) => !current)}
+              className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full ring-1 ring-white/10 transition hover:ring-white/20 md:h-10 md:w-10"
+              aria-haspopup="menu"
+              aria-expanded={open}
+            >
+              <img
+                src={profile}
+                alt="Profile menu"
+                className="h-full w-full object-cover"
+              />
+            </button>
+
+            {open ? (
+              <div className="absolute right-0 top-[calc(100%+0.75rem)] z-50">
+                <Profilebox />
+              </div>
+            ) : null}
+          </div>
         </div>
       </header>
 
