@@ -12,8 +12,6 @@ import Profilebox from "../Components/Profilebox";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const navigationLinks = ["Find Jobs", "Companies", "Resources"];
-
 const filterItems = [
   { label: "Location", icon: MapPin },
   { label: "Job Type", icon: Briefcase },
