@@ -13,8 +13,23 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const filterItems = [
-  { label: "Location", icon: MapPin },
-  { label: "Job Type", icon: Briefcase },
+  {
+    key: "location",
+    label: "Location",
+    icon: MapPin,
+    options: [
+      "All Locations",
+      "San Francisco",
+      "Remote (US/EU)",
+      "New York, NY",
+    ],
+  },
+  {
+    key: "jobType",
+    label: "Job Type",
+    icon: Briefcase,
+    options: ["All Job Types", "Full Time", "Part Time", "Internship"],
+  },
 ];
 
 const roleCounts = [
@@ -30,6 +45,7 @@ const featuredJobs = [
     time: "2 hours ago",
     title: "Senior Full Stack Engineer",
     location: "San Francisco",
+    jobType: "Full Time",
     salary: "$160k - $220k",
     tag: "Greenhouse",
     tagIcon: ShieldCheck,
@@ -39,6 +55,7 @@ const featuredJobs = [
     time: "5 hours ago",
     title: "Staff Frontend Architect",
     location: "Remote (US/EU)",
+    jobType: "Part Time",
     salary: "Full-time",
     tag: "Greenhouse",
     tagIcon: ShieldCheck,
@@ -48,6 +65,7 @@ const featuredJobs = [
     time: "Yesterday",
     title: "Backend Engineer (Rust)",
     location: "New York, NY",
+    jobType: "Internship",
     salary: "Web3",
     tag: "Greenhouse",
     tagIcon: ShieldCheck,
@@ -64,7 +82,29 @@ const backend = import.meta.env.VITE_BACKEND_URL;
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState(null);
+  const [selectedFilters, setSelectedFilters] = useState({
+    location: null,
+    jobType: null,
+  });
   const nav = useNavigate();
+
+  const filteredJobs = featuredJobs.filter((job) => {
+    const locationMatches =
+      !selectedFilters.location || job.location === selectedFilters.location;
+    const jobTypeMatches =
+      !selectedFilters.jobType || job.jobType === selectedFilters.jobType;
+
+    return locationMatches && jobTypeMatches;
+  });
+
+  const handleFilterSelect = (filterKey, option) => {
+    setSelectedFilters((current) => ({
+      ...current,
+      [filterKey]: option.startsWith("All ") ? null : option,
+    }));
+    setActiveFilter(null);
+  };
 
   const profileNav = async () => {
     const res = await axios.get(`${backend}/api/v1/profile`, {
@@ -154,18 +194,39 @@ const Dashboard = () => {
               />
             </label>
 
-            {filterItems.map(({ label, icon: Icon }) => (
-              <button
-                key={label}
-                type="button"
-                className="flex h-12 items-center justify-between rounded-xl border border-white/8 bg-[#101015] px-4 text-sm text-white/70 transition hover:border-white/15 hover:text-white"
-              >
-                <span className="flex items-center gap-3">
-                  <Icon className="h-4.5 w-4.5 text-white/55" />
-                  {label}
-                </span>
-                <ChevronDown className="h-4 w-4 text-white/40" />
-              </button>
+            {filterItems.map(({ key, label, icon: Icon, options }) => (
+              <div key={label} className="relative">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveFilter((current) =>
+                      current === key ? null : key,
+                    );
+                  }}
+                  className="flex h-12 w-full items-center justify-between rounded-xl border border-white/8 bg-[#101015] px-4 text-sm text-white/70 transition hover:border-white/15 hover:text-white"
+                >
+                  <span className="flex items-center gap-3">
+                    <Icon className="h-4.5 w-4.5 text-white/55" />
+                    {selectedFilters[key] ?? label}
+                  </span>
+                  <ChevronDown className="h-4 w-4 text-white/40" />
+                </button>
+
+                {activeFilter === key ? (
+                  <div className="absolute left-0 right-0 top-[calc(100%+0.5rem)] z-20 rounded-xl border border-white/8 bg-[#111116] p-2 shadow-xl">
+                    {options.map((option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        className="flex w-full items-center rounded-lg px-3 py-2 text-left text-sm text-white/72 transition hover:bg-white/5 hover:text-white"
+                        onClick={() => handleFilterSelect(key, option)}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             ))}
 
             <button className="flex h-12 items-center justify-between rounded-xl px-3 text-sm font-medium text-white/78 lg:justify-end lg:px-0">
@@ -213,7 +274,7 @@ const Dashboard = () => {
           </aside>
 
           <section className="space-y-3">
-            {featuredJobs.map((job) => {
+            {filteredJobs.map((job) => {
               const TagIcon = job.tagIcon;
 
               return (
