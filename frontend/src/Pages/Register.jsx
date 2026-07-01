@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "../assets/roleflux_logo.png";
 import "../App.css";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail,Lock, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -126,18 +126,21 @@ const Register = () => {
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={(event) =>
-                    handleChange("email", event.target.value)
-                  }
-                  placeholder="Enter your email"
-                  className="w-full h-12 rounded-2xl border border-slate-500/20 bg-slate-800/70 text-gray-200 px-4 outline-none text-sm placeholder-slate-500 shadow-inner focus:border-indigo-500/50 transition"
-                  aria-invalid={Boolean(errors.email)}
-                  required
-                />
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-purple-400" />
+                  <input
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={(event) =>
+                      handleChange("email", event.target.value)
+                    }
+                    placeholder="Enter your email"
+                    className="w-full h-12 rounded-2xl border border-slate-500/20 bg-slate-800/70 text-gray-200 pl-11 pr-4 outline-none text-sm placeholder-slate-500 shadow-inner focus:border-indigo-500/50 transition"
+                    aria-invalid={Boolean(errors.email)}
+                    required
+                  />
+                </div>
                 {errors.email ? (
                   <p className="text-sm text-red-300">{errors.email}</p>
                 ) : null}
@@ -146,6 +149,7 @@ const Register = () => {
               <div className="space-y-2">
                 <label className="text-sm font-semibold">Password</label>
                 <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-purple-400" />
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
@@ -154,7 +158,7 @@ const Register = () => {
                       handleChange("password", event.target.value)
                     }
                     placeholder="Create a password"
-                    className="w-full h-12 rounded-2xl border border-slate-500/20 bg-slate-800/70 text-gray-200 px-4 outline-none text-sm placeholder-slate-500 shadow-inner focus:border-indigo-500/50 transition pr-12"
+                    className="w-full h-12 rounded-2xl border border-slate-500/20 bg-slate-800/70 text-gray-200 pl-11 pr-12 outline-none text-sm placeholder-slate-500 shadow-inner focus:border-indigo-500/50 transition"
                     aria-invalid={Boolean(errors.password)}
                     required
                   />
