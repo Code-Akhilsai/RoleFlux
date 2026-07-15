@@ -11,6 +11,7 @@ import { useState } from "react";
 import Profilebox from "../Components/Profilebox";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const filterItems = [
   {
@@ -131,6 +132,16 @@ const Dashboard = () => {
       alert("An error occurred during logout");
     }
   };
+
+  const fetchJobs = async () => {
+    const res = await axios.get(`${backend}/api/v1/jobs`);
+
+    console.log(res.data);
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, [1]);
 
   return (
     <div className="min-h-screen bg-[#0b0b10] text-white">
