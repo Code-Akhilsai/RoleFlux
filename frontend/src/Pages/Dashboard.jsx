@@ -88,6 +88,8 @@ const Dashboard = () => {
     location: null,
     jobType: null,
   });
+  const [searching, setSearch] = useState("");
+  const [jobs, setJobs] = useState([]);
   const nav = useNavigate();
 
   const filteredJobs = featuredJobs.filter((job) => {
@@ -134,9 +136,15 @@ const Dashboard = () => {
   };
 
   const fetchJobs = async () => {
-    const res = await axios.get(`${backend}/api/v1/jobs`);
-
+    const res = await axios.post(`${backend}/api/v1/jobs`);
+    setJobs(res.data);
     console.log(res.data);
+  };
+
+  const searchJobs = async () => {
+    const searchedJobs = await axios.post(`${backend}/api/v1/jobs`, {
+      searching,
+    });
   };
 
   useEffect(() => {
@@ -197,8 +205,13 @@ const Dashboard = () => {
         <section className="mt-8 rounded-2xl border border-white/8 bg-white/3 p-3 shadow-[0_0_0_1px_rgba(255,255,255,0.015)] sm:p-4">
           <div className="grid gap-3 lg:grid-cols-[minmax(0,1.45fr)_repeat(2,minmax(0,0.52fr))_auto] lg:items-center">
             <label className="flex h-12 items-center gap-3 rounded-xl border border-white/8 bg-[#101015] px-4 text-white/60 focus-within:border-white/20">
-              <Search className="h-4.5 w-4.5 shrink-0 text-white/55" />
+              <Search
+                className="h-4.5 w-4.5 shrink-0 text-white/55"
+                onClick={searchJobs}
+              />
               <input
+                value={searching}
+                onChange={(e) => setSearch(e.target.value)}
                 type="text"
                 placeholder="Search job titles, keywords..."
                 className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/38"
@@ -285,67 +298,81 @@ const Dashboard = () => {
           </aside>
 
           <section className="space-y-3">
-            {filteredJobs.map((job) => {
-              const TagIcon = job.tagIcon;
+            {jobs.map((job) => {
+              const {
+                job_title,
+                employer_name,
+                job_apply_link,
+                job_location,
+                employer_logo,
+                job_employment_type,
+                job_publisher,
+                job_is_remote,
+              } = job;
 
               return (
                 <article
-                  key={job.title}
+                  key={job_title}
                   className="grid gap-4 rounded-2xl border border-white/8 bg-[#111116] px-4 py-4 shadow-[0_0_0_1px_rgba(255,255,255,0.015)] sm:px-5 sm:py-5 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5"
                 >
                   <div className="flex items-start gap-4">
                     <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-white/10 bg-[#1d1a27] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.015)]">
-                      <span className="h-7 w-7 rounded-full bg-[radial-gradient(circle_at_30%_30%,#8fd3ff_0%,#1a2540_48%,#0b0b10_100%)]" />
+                      <img src={employer_logo} />
                     </div>
 
                     <div className="lg:hidden">
                       <div className="flex items-center gap-2 text-xs font-semibold text-white/75">
-                        <span>{job.company}</span>
+                        <span>{employer_name}</span>
                         <span className="text-white/35">•</span>
-                        <span>{job.time}</span>
+                        <span>{job_publisher}</span>
                       </div>
                       <h3 className="mt-1 text-[1.02rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.15rem]">
-                        {job.title}
+                        {job_title}
                       </h3>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <JobMeta icon={MapPin}>{job_location}</JobMeta>
+                        <JobMeta icon={Briefcase}>
+                          {job_employment_type}
+                        </JobMeta>
+                        {job_is_remote && (
+                          <span className="inline-flex items-center gap-1.5 rounded-md border border-white/8 bg-white/5 px-2.5 py-1 text-[0.72rem] font-medium text-white/80">
+                            Remote
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
 
                   <div className="hidden lg:block">
                     <div className="flex items-center gap-2 text-sm font-semibold text-white/75">
-                      <span>{job.company}</span>
+                      <span>{employer_name}</span>
                       <span className="text-white/35">•</span>
-                      <span>{job.time}</span>
+                      <span>{job_publisher}</span>
                     </div>
                     <h3 className="mt-1 text-[1.18rem] font-semibold tracking-[-0.045em] text-white xl:text-[1.28rem]">
-                      {job.title}
+                      {job_title}
                     </h3>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <JobMeta icon={MapPin}>{job.location}</JobMeta>
-                      <JobMeta icon={Briefcase}>{job.salary}</JobMeta>
-                      <JobMeta icon={TagIcon}>{job.tag}</JobMeta>
+                      <JobMeta icon={MapPin}>{job_location}</JobMeta>
+                      <JobMeta icon={Briefcase}>{job_employment_type}</JobMeta>
+                      {job_is_remote && (
+                        <span className="inline-flex items-center gap-1.5 rounded-md border border-white/8 bg-white/5 px-2.5 py-1 text-[0.72rem] font-medium text-white/80">
+                          Remote
+                        </span>
+                      )}
                     </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 lg:hidden">
-                    <JobMeta icon={MapPin}>{job.location}</JobMeta>
-                    <JobMeta icon={Briefcase}>{job.salary}</JobMeta>
-                    <JobMeta icon={TagIcon}>{job.tag}</JobMeta>
                   </div>
 
                   <div className="flex lg:justify-end">
-                    <button className="btn-primary h-10 w-full rounded-md px-5 text-sm font-semibold text-white sm:w-auto sm:min-w-28">
-                      Apply Now
-                    </button>
+                    <a href={job_apply_link} target="_blank" className="w-full">
+                      <button className="btn-primary h-10 w-full rounded-md px-5 text-sm font-semibold text-white sm:w-auto sm:min-w-28">
+                        Apply Now
+                      </button>
+                    </a>
                   </div>
                 </article>
               );
             })}
-
-            <div className="flex justify-center pt-4">
-              <button className="rounded-md border border-white/12 bg-transparent px-6 py-3 text-sm font-semibold text-white/88 transition hover:border-white/20 hover:bg-white/4">
-                Load more opportunities
-              </button>
-            </div>
           </section>
         </section>
       </main>

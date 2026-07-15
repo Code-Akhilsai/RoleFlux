@@ -3,6 +3,6 @@ import jobsController from "../controllers/jobs.controllers.js";
 
 const jobsRouter = Router();
 
-jobsRouter.get("/jobs", jobsController);
+jobsRouter.post("/jobs", jobsController);
 
 export default jobsRouter;
