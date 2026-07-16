@@ -1,16 +1,22 @@
 import axios from "axios";
 
 const jobsController = async (req, res) => {
-  const { searching } = req.body || {};
+  const { searching, jobType, location } = req.body || {};
+
+  const query = searching || "developer jobs in India";
+  const employmentTypes = jobType && jobType !== "ALL" ? jobType : "";
+  const jobLocation = location || "";
 
   const options = {
     method: "GET",
     url: "https://jsearch.p.rapidapi.com/search-v2",
     params: {
-      query: searching ? searching : "developer jobs in India",
+      query,
       num_pages: "1",
       country: "in",
-      date_posted: "all",
+      date_posted: "month",
+      employment_types: employmentTypes,
+      location: jobLocation,
     },
     headers: {
       "x-rapidapi-key": process.env.RAPIDAPI_KEY,

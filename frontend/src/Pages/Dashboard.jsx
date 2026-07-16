@@ -4,7 +4,6 @@ import {
   LoaderCircle,
   MapPin,
   Search,
-  ShieldCheck,
   ArrowLeft,
 } from "lucide-react";
 import logo from "../assets/roleflux_logo.png";
@@ -21,17 +20,25 @@ const filterItems = [
     label: "Location",
     icon: MapPin,
     options: [
-      "All Locations",
-      "San Francisco",
-      "Remote (US/EU)",
-      "New York, NY",
+      "Remote",
+      "Bengaluru, Karnataka",
+      "Gurugram, Haryana",
+      "Noida, Uttar Pradesh",
+      "Mumbai, Maharashtra",
+      "New Delhi, Delhi",
+      "Hyderabad, Telangana",
+      "Pune, Maharashtra",
+      "Chennai, Tamil Nadu",
+      "Kolkata, West Bengal",
+      "Ahmedabad, Gujarat",
+      "Jaipur, Rajasthan",
     ],
   },
   {
     key: "jobType",
     label: "Job Type",
     icon: Briefcase,
-    options: ["All Job Types", "Full Time", "Part Time", "Internship"],
+    options: ["ALL", "FULLTIME", "PARTTIME", "INTERN"],
   },
 ];
 
@@ -40,39 +47,6 @@ const roleCounts = [
   { label: "Product Design", count: 82 },
   { label: "Data Science", count: 45 },
   { label: "Marketing", count: 29 },
-];
-
-const featuredJobs = [
-  {
-    company: "Nexus AI",
-    time: "2 hours ago",
-    title: "Senior Full Stack Engineer",
-    location: "San Francisco",
-    jobType: "Full Time",
-    salary: "$160k - $220k",
-    tag: "Greenhouse",
-    tagIcon: ShieldCheck,
-  },
-  {
-    company: "Flow Systems",
-    time: "5 hours ago",
-    title: "Staff Frontend Architect",
-    location: "Remote (US/EU)",
-    jobType: "Part Time",
-    salary: "Full-time",
-    tag: "Greenhouse",
-    tagIcon: ShieldCheck,
-  },
-  {
-    company: "Vortex Crypto",
-    time: "Yesterday",
-    title: "Backend Engineer (Rust)",
-    location: "New York, NY",
-    jobType: "Internship",
-    salary: "Web3",
-    tag: "Greenhouse",
-    tagIcon: ShieldCheck,
-  },
 ];
 
 const JobMeta = ({ icon: Icon, children }) => (
@@ -97,19 +71,10 @@ const Dashboard = () => {
   const [backbtn, setBackbtn] = useState(true);
   const nav = useNavigate();
 
-  const filteredJobs = featuredJobs.filter((job) => {
-    const locationMatches =
-      !selectedFilters.location || job.location === selectedFilters.location;
-    const jobTypeMatches =
-      !selectedFilters.jobType || job.jobType === selectedFilters.jobType;
-
-    return locationMatches && jobTypeMatches;
-  });
-
   const handleFilterSelect = (filterKey, option) => {
     setSelectedFilters((current) => ({
       ...current,
-      [filterKey]: option.startsWith("All ") ? null : option,
+      [filterKey]: option === "ALL" ? null : option,
     }));
     setActiveFilter(null);
   };
@@ -144,7 +109,11 @@ const Dashboard = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post(`${backend}/api/v1/jobs`);
+      const res = await axios.post(`${backend}/api/v1/jobs`, {
+        searching,
+        jobType: selectedFilters.jobType,
+        location: selectedFilters.location,
+      });
       setJobs(res.data);
       setBackbtn(true);
     } finally {
@@ -159,6 +128,8 @@ const Dashboard = () => {
     try {
       const searchedJobs = await axios.post(`${backend}/api/v1/jobs`, {
         searching,
+        jobType: selectedFilters.jobType,
+        location: selectedFilters.location,
       });
 
       setJobs(searchedJobs.data);
@@ -272,13 +243,6 @@ const Dashboard = () => {
                 ) : null}
               </div>
             ))}
-
-            <button className="flex h-12 items-center justify-between rounded-xl px-3 text-sm font-medium text-white/78 lg:justify-end lg:px-0">
-              <span className="mr-3 hidden sm:inline">Remote</span>
-              <span className="relative inline-flex h-6 w-11 items-center rounded-full bg-white/16 p-0.5">
-                <span className="h-5 w-5 rounded-full bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.12)]" />
-              </span>
-            </button>
           </div>
         </section>
 
@@ -319,11 +283,11 @@ const Dashboard = () => {
 
           <section className="space-y-3">
             <div
-              className={`${backbtn ? "hidden" : "flex"} items-center gap-1`}
+              className={`${backbtn ? "hidden" : "flex"} cursor-pointer select-none items-center gap-1`}
               onClick={fetchJobs}
             >
               <ArrowLeft size={20} />
-              <h1 className="text-white text-[14px]">Back</h1>
+              <p className="text-white text-[14px]">Back</p>
             </div>
 
             {loading ? (
