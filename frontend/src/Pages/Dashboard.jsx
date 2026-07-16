@@ -1,6 +1,7 @@
 import {
   Briefcase,
   ChevronDown,
+  LoaderCircle,
   MapPin,
   Search,
   ShieldCheck,
@@ -91,6 +92,7 @@ const Dashboard = () => {
   });
   const [searching, setSearch] = useState("");
   const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [backbtn, setBackbtn] = useState(true);
   const nav = useNavigate();
@@ -139,18 +141,30 @@ const Dashboard = () => {
   };
 
   const fetchJobs = async () => {
-    const res = await axios.post(`${backend}/api/v1/jobs`);
-    setJobs(res.data);
-    setBackbtn(true);
+    setLoading(true);
+
+    try {
+      const res = await axios.post(`${backend}/api/v1/jobs`);
+      setJobs(res.data);
+      setBackbtn(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const searchJobs = async () => {
+    setLoading(true);
     setBackbtn(false);
-    const searchedJobs = await axios.post(`${backend}/api/v1/jobs`, {
-      searching,
-    });
 
-    setJobs(searchedJobs.data);
+    try {
+      const searchedJobs = await axios.post(`${backend}/api/v1/jobs`, {
+        searching,
+      });
+
+      setJobs(searchedJobs.data);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -311,6 +325,13 @@ const Dashboard = () => {
               <ArrowLeft size={20} />
               <h1 className="text-white text-[14px]">Back</h1>
             </div>
+
+            {loading ? (
+              <div className="flex items-center gap-2 rounded-2xl border border-white/8 bg-[#111116] px-4 py-5 text-sm text-white/70">
+                <LoaderCircle className="h-4 w-4 animate-spin text-white/55" />
+                Loading jobs...
+              </div>
+            ) : null}
 
             {jobs.map((job) => {
               const {
