@@ -1,13 +1,15 @@
 import axios from "axios";
 
 const jobsController = async (req, res) => {
+  const { searching } = req.body || {};
+
   const options = {
     method: "GET",
     url: "https://jsearch.p.rapidapi.com/search-v2",
     params: {
-      query: "developer jobs in India",
-      num_pages: "2",
-      country: "us",
+      query: searching ? searching : "developer jobs in India",
+      num_pages: "1",
+      country: "in",
       date_posted: "all",
     },
     headers: {

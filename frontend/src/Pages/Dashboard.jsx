@@ -4,6 +4,7 @@ import {
   MapPin,
   Search,
   ShieldCheck,
+  ArrowLeft,
 } from "lucide-react";
 import logo from "../assets/roleflux_logo.png";
 import profile from "../assets/profile.png";
@@ -90,6 +91,8 @@ const Dashboard = () => {
   });
   const [searching, setSearch] = useState("");
   const [jobs, setJobs] = useState([]);
+
+  const [backbtn, setBackbtn] = useState(true);
   const nav = useNavigate();
 
   const filteredJobs = featuredJobs.filter((job) => {
@@ -138,18 +141,21 @@ const Dashboard = () => {
   const fetchJobs = async () => {
     const res = await axios.post(`${backend}/api/v1/jobs`);
     setJobs(res.data);
-    console.log(res.data);
+    setBackbtn(true);
   };
 
   const searchJobs = async () => {
+    setBackbtn(false);
     const searchedJobs = await axios.post(`${backend}/api/v1/jobs`, {
       searching,
     });
+
+    setJobs(searchedJobs.data);
   };
 
   useEffect(() => {
     fetchJobs();
-  }, [1]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0b0b10] text-white">
@@ -298,8 +304,17 @@ const Dashboard = () => {
           </aside>
 
           <section className="space-y-3">
+            <div
+              className={`${backbtn ? "hidden" : "flex"} items-center gap-1`}
+              onClick={fetchJobs}
+            >
+              <ArrowLeft size={20} />
+              <h1 className="text-white text-[14px]">Back</h1>
+            </div>
+
             {jobs.map((job) => {
               const {
+                job_id,
                 job_title,
                 employer_name,
                 job_apply_link,
@@ -312,7 +327,7 @@ const Dashboard = () => {
 
               return (
                 <article
-                  key={job_title}
+                  key={job_id}
                   className="grid gap-4 rounded-2xl border border-white/8 bg-[#111116] px-4 py-4 shadow-[0_0_0_1px_rgba(255,255,255,0.015)] sm:px-5 sm:py-5 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5"
                 >
                   <div className="flex items-start gap-4">
