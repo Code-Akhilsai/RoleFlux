@@ -2,8 +2,8 @@ import { Router } from "express";
 import profileController from "../controllers/profile.controllers.js";
 import profile_middleware from "../middlewares/profile.middlewares.js";
 
-const Profilerouter = Router();
+const Profile_router = Router();
 
-Profilerouter.get("/profile", profile_middleware, profileController);
+Profile_router.get("/profile", profile_middleware, profileController);
 
-export default Profilerouter;
+export default Profile_router;

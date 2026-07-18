@@ -1,12 +1,12 @@
 import axios from "axios";
 import client from "../db/redis.js";
 
-const jobsController = async (req, res) => {
-  const cachedJobs = await client.get("jobs:");
+const searchController = async (req, res) => {
+  const { searching, jobType, location } = req.query || {};
 
-  if (cachedJobs) return res.status(200).json(JSON.parse(cachedJobs));
-
-  const query = "developer jobs in India";
+  const query = searching;
+  const employmentTypes = jobType && jobType !== "ALL" ? jobType : "";
+  const jobLocation = location || "";
 
   const options = {
     method: "GET",
@@ -16,6 +16,8 @@ const jobsController = async (req, res) => {
       num_pages: "1",
       country: "in",
       date_posted: "month",
+      employment_types: employmentTypes,
+      location: jobLocation,
     },
     headers: {
       "x-rapidapi-key": process.env.RAPIDAPI_KEY,
@@ -27,16 +29,10 @@ const jobsController = async (req, res) => {
   try {
     const response = await axios.request(options);
 
-    await client.setEx(
-      "jobs:",
-      60 * 60 * 24,
-      JSON.stringify(response.data.data.jobs),
-    );
-
     return res.send(response.data.data.jobs);
   } catch (error) {
     console.error(error);
   }
 };
 
-export default jobsController;
+export default searchController;

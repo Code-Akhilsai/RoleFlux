@@ -126,10 +126,12 @@ const Dashboard = () => {
     setBackbtn(false);
 
     try {
-      const searchedJobs = await axios.post(`${backend}/api/v1/jobs`, {
-        searching,
-        jobType: selectedFilters.jobType,
-        location: selectedFilters.location,
+      const searchedJobs = await axios.get(`${backend}/api/v1/jobs/search`, {
+        params: {
+          searching,
+          jobType: selectedFilters.jobType,
+          location: selectedFilters.location,
+        },
       });
 
       setJobs(searchedJobs.data);
