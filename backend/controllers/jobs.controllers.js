@@ -35,8 +35,7 @@ const jobsController = async (req, res) => {
 
     return res.send(response.data.data.jobs);
   } catch (error) {
-    console.error(error);
+    return res.status(500).json({ error: "Failed to fetch jobs" });
   }
 };
-
 export default jobsController;

@@ -252,17 +252,43 @@ const Dashboard = () => {
           <aside className="space-y-5">
             <div className="rounded-2xl border border-white/8 bg-[#121218] p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.015)]">
               <h2 className="text-lg font-semibold tracking-[-0.03em] text-white/92">
-                Popular Roles
+                Job Market Insights
               </h2>
 
               <div className="mt-5 space-y-4">
-                {roleCounts.map((role) => (
+                {[
+                  { label: "Active Listings", value: jobs.length },
+                  {
+                    label: "Remote Opportunities",
+                    value: jobs.filter((j) => j.job_is_remote).length,
+                  },
+                  {
+                    label: "Full-time Roles",
+                    value: jobs.filter((j) =>
+                      j.job_employment_types?.includes("FULLTIME"),
+                    ).length,
+                  },
+                  {
+                    label: "Top Location",
+                    value: jobs.length
+                      ? Object.entries(
+                          jobs.reduce((acc, j) => {
+                            const loc = j.job_location || "Unknown";
+                            acc[loc] = (acc[loc] || 0) + 1;
+                            return acc;
+                          }, {}),
+                        ).sort((a, b) => b[1] - a[1])[0]?.[0] || "-"
+                      : "-",
+                  },
+                ].map(({ label, value }) => (
                   <div
-                    key={role.label}
+                    key={label}
                     className="flex items-center justify-between text-sm"
                   >
-                    <span className="text-white/74">{role.label}</span>
-                    <span className="text-white/42">{role.count}</span>
+                    <span className="text-white/74">{label}</span>
+                    <span className="rounded-lg bg-white/8 px-2.5 py-1 text-white/90 font-semibold">
+                      {value}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -272,11 +298,11 @@ const Dashboard = () => {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(123,92,255,0.28),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(92,170,255,0.18),transparent_32%)]" />
               <div className="relative min-h-52 p-4">
                 <span className="inline-flex rounded-full border border-white/10 bg-black/35 px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.28em] text-white/72">
-                  Featured
+                  Smart Matching
                 </span>
-                <div className="mt-16 max-w-40">
-                  <h3 className="text-[1.15rem] font-semibold leading-5 tracking-[-0.04em] text-white">
-                    Build the future at RoleFlux.
+                <div className="mt-6 max-w-40">
+                  <h3 className="text-[1.15rem] font-semibold leading-7 tracking-[-0.04em] text-white">
+                    Get matched with your ideal roles instantly.
                   </h3>
                 </div>
               </div>
