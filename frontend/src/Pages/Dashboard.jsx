@@ -13,6 +13,7 @@ import Profilebox from "../Components/Profilebox";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import company from "../assets/company.png";
 
 const filterItems = [
   {
@@ -198,10 +199,7 @@ const Dashboard = () => {
         <section className="mt-8 rounded-2xl border border-white/8 bg-white/3 p-3 shadow-[0_0_0_1px_rgba(255,255,255,0.015)] sm:p-4">
           <div className="grid gap-3 lg:grid-cols-[minmax(0,1.45fr)_repeat(2,minmax(0,0.52fr))_auto] lg:items-center">
             <label className="flex h-12 items-center gap-3 rounded-xl border border-white/8 bg-[#101015] px-4 text-white/60 focus-within:border-white/20">
-              <Search
-                className="h-4.5 w-4.5 shrink-0 text-white/55"
-                onClick={searchJobs}
-              />
+              <Search className="h-4.5 w-4.5 shrink-0 text-white/55" />
               <input
                 value={searching}
                 onChange={(e) => setSearch(e.target.value)}
@@ -245,6 +243,13 @@ const Dashboard = () => {
                 ) : null}
               </div>
             ))}
+            <button
+              type="button"
+              onClick={searchJobs}
+              className="btn-primary h-10 w-full rounded-md px-5 text-sm font-semibold text-white sm:w-auto sm:min-w-28"
+            >
+              Search
+            </button>
           </div>
         </section>
 
@@ -325,39 +330,81 @@ const Dashboard = () => {
               </div>
             ) : null}
 
-            {jobs.map((job) => {
-              const {
-                job_id,
-                job_title,
-                employer_name,
-                job_apply_link,
-                job_location,
-                employer_logo,
-                job_employment_type,
-                job_publisher,
-                job_is_remote,
-              } = job;
+            {!loading && jobs.length === 0 ? (
+              <div className="rounded-2xl border border-white/8 bg-[#111116] px-6 py-10 text-center">
+                <h3 className="text-lg font-semibold text-white">
+                  No jobs found
+                </h3>
+                <p className="mt-2 text-sm text-white/60">
+                  Try a different search keyword or filters.
+                </p>
+              </div>
+            ) : (
+              jobs.map((job) => {
+                const {
+                  job_id,
+                  job_title,
+                  employer_name,
+                  job_apply_link,
+                  job_location,
+                  employer_logo,
+                  job_employment_type,
+                  job_publisher,
+                  job_is_remote,
+                } = job;
 
-              return (
-                <article
-                  key={job_id}
-                  className="grid gap-4 rounded-2xl border border-white/8 bg-[#111116] px-4 py-4 shadow-[0_0_0_1px_rgba(255,255,255,0.015)] sm:px-5 sm:py-5 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-white/10 bg-[#1d1a27] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.015)]">
-                      <img src={employer_logo} />
+                return (
+                  <article
+                    key={job_id}
+                    className="grid gap-4 rounded-2xl border border-white/8 bg-[#111116] px-4 py-4 shadow-[0_0_0_1px_rgba(255,255,255,0.015)] sm:px-5 sm:py-5 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-5"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-white/10 bg-[#1d1a27] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.015)]">
+                        <img
+                          src={employer_logo || company}
+                          alt={employer_name}
+                          className="h-10 w-10 object-contain"
+                          onError={(e) => {
+                            e.target.src = company;
+                          }}
+                        />
+                      </div>
+
+                      <div className="lg:hidden">
+                        <div className="flex items-center gap-2 text-xs font-semibold text-white/75">
+                          <span>{employer_name}</span>
+                          <span className="text-white/35">•</span>
+                          <span>{job_publisher}</span>
+                        </div>
+                        <h3 className="mt-1 text-[1.02rem] font-semibold tracking-[-0.045em] text-white sm:text-[1.15rem]">
+                          {job_title.length > 40
+                            ? `${job_title.slice(0, 40)}...`
+                            : job_title}
+                        </h3>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          <JobMeta icon={MapPin}>{job_location}</JobMeta>
+                          <JobMeta icon={Briefcase}>
+                            {job_employment_type}
+                          </JobMeta>
+                          {job_is_remote && (
+                            <span className="inline-flex items-center gap-1.5 rounded-md border border-white/8 bg-white/5 px-2.5 py-1 text-[0.72rem] font-medium text-white/80">
+                              Remote
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="lg:hidden">
-                      <div className="flex items-center gap-2 text-xs font-semibold text-white/75">
+                    <div className="hidden lg:block">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-white/75">
                         <span>{employer_name}</span>
                         <span className="text-white/35">•</span>
                         <span>{job_publisher}</span>
                       </div>
-                      <h3 className="mt-1 text-[1.02rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.15rem]">
+                      <h3 className="mt-1 text-[1.18rem] font-semibold tracking-[-0.045em] text-white xl:text-[1.28rem]">
                         {job_title}
                       </h3>
-                      <div className="mt-2 flex flex-wrap gap-2">
+                      <div className="mt-3 flex flex-wrap gap-2">
                         <JobMeta icon={MapPin}>{job_location}</JobMeta>
                         <JobMeta icon={Briefcase}>
                           {job_employment_type}
@@ -369,38 +416,22 @@ const Dashboard = () => {
                         )}
                       </div>
                     </div>
-                  </div>
 
-                  <div className="hidden lg:block">
-                    <div className="flex items-center gap-2 text-sm font-semibold text-white/75">
-                      <span>{employer_name}</span>
-                      <span className="text-white/35">•</span>
-                      <span>{job_publisher}</span>
+                    <div className="flex lg:justify-end">
+                      <a
+                        href={job_apply_link}
+                        target="_blank"
+                        className="w-full"
+                      >
+                        <button className="btn-primary h-10 w-full rounded-md px-5 text-sm font-semibold text-white sm:w-auto sm:min-w-28">
+                          Apply Now
+                        </button>
+                      </a>
                     </div>
-                    <h3 className="mt-1 text-[1.18rem] font-semibold tracking-[-0.045em] text-white xl:text-[1.28rem]">
-                      {job_title}
-                    </h3>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <JobMeta icon={MapPin}>{job_location}</JobMeta>
-                      <JobMeta icon={Briefcase}>{job_employment_type}</JobMeta>
-                      {job_is_remote && (
-                        <span className="inline-flex items-center gap-1.5 rounded-md border border-white/8 bg-white/5 px-2.5 py-1 text-[0.72rem] font-medium text-white/80">
-                          Remote
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex lg:justify-end">
-                    <a href={job_apply_link} target="_blank" className="w-full">
-                      <button className="btn-primary h-10 w-full rounded-md px-5 text-sm font-semibold text-white sm:w-auto sm:min-w-28">
-                        Apply Now
-                      </button>
-                    </a>
-                  </div>
-                </article>
-              );
-            })}
+                  </article>
+                );
+              })
+            )}
           </section>
         </section>
       </main>
