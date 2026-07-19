@@ -7,35 +7,32 @@ const featuredRoles = [
   {
     badge: "New",
     badgeTone: "new",
-    logoLabel: "S",
-    logoTone: "stripe",
-    title: "Staff Backend Engineer",
-    company: "Stripe",
-    location: "Remote",
-    salary: "$180k - $240k",
-    tags: ["Go", "Kubernetes", "PostgreSQL"],
+    logoLabel: "T",
+    logoTone: "tcs",
+    title: "Snowflake Developer",
+    company: "Tata Consultancy Services",
+    location: "Bengaluru, India",
+    tags: ["Snowflake", "DBT", "Python"],
   },
   {
     badge: "Hot",
     badgeTone: "hot",
-    logoLabel: "A",
-    logoTone: "anthropic",
-    title: "ML Systems Researcher",
-    company: "Anthropic",
-    location: "SF / London",
-    salary: "$250k+",
-    tags: ["Python", "PyTorch", "LLMs"],
+    logoLabel: "O",
+    logoTone: "outmarch",
+    title: "Backend Developer",
+    company: "Outmarch",
+    location: "Pune, India",
+    tags: ["Node.js", "AWS", "MongoDB"],
   },
   {
     badge: "Featured",
     badgeTone: "new",
-    logoLabel: "O",
-    logoTone: "openai",
-    title: "Product Engineer",
-    company: "OpenAI",
-    location: "SF / Remote",
-    salary: "$220k - $300k",
-    tags: ["TypeScript", "React", "Design Systems"],
+    logoLabel: "K",
+    logoTone: "koa",
+    title: "Full Stack Developer",
+    company: "Koa Care",
+    location: "India",
+    tags: ["Flutter", "Node.js", "PostgreSQL"],
   },
 ];
 
@@ -58,7 +55,7 @@ const Home = () => {
         </button>
       </section>
 
-      <section className="mt-9 px-2 text-center  pb-25 ">
+      <section className="mt-15 px-2 text-center  pb-25 ">
         <p className="text-5xl font-sans font-semibold leading-16 tracking-tight md:text-5xl md:mt-7 lg:text-6xl lg:mt-8 ">
           <span className="text-white">Find your next </span>
           <span className="bg-linear-to-r from-indigo-300 via-blue-500 to-slate-700 bg-clip-text text-transparent">
@@ -77,17 +74,6 @@ const Home = () => {
           Filter by stack, stage, and equity—refining your search with technical
           mastery.
         </p>
-        <div className="bg-[#131212] rounded-2xl outline-neutral-600 focus-within:outline-1 focus-within:outline-neutral-500 mt-6 flex items-center gap-2 px-3 sm:w-150 sm:mx-auto lg:mt-11">
-          <FaSearch className="text-neutral-500 text-sm shrink-0" />
-          <input
-            type="text"
-            placeholder="search by title , company"
-            className="bg-transparent outline-none text-neutral-400 h-14 flex-1 "
-          />
-          <button className="btn-primary text-white font-semibold text-[12px] h-9 w-64 rounded-xl mr-1 sm:w-30 lg:w-26 lg:text-[15px] ">
-            Search
-          </button>
-        </div>
       </section>
 
       <section className="mt-6 pb-12 sm:pb-16 lg:pb-20">
@@ -143,7 +129,7 @@ const Home = () => {
             </div>
 
             <a
-              href="#"
+              href="/login"
               className="mt-2 flex shrink-0 items-center gap-2 text-sm sm:text-base font-semibold text-white/80 transition hover:text-white"
             >
               View all jobs
@@ -153,10 +139,106 @@ const Home = () => {
             </a>
           </div>
 
-          <div className="mt-8 grid gap-8 lg:grid-cols-3 lg:gap-8">
+          <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:justify-center ">
             {featuredRoles.map((role) => (
               <FeaturedRoleCard key={role.title} {...role} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 mt-10 sm:px-5 lg:px-8 py-10 sm:py-12 lg:py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tighter text-white">
+              Why Developers Choose RoleFlux
+            </h2>
+
+            <p className="mt-4 max-w-3xl mx-auto text-sm sm:text-base leading-7 text-white/70">
+              RoleFlux is built specifically for software engineers. Instead of
+              browsing thousands of unrelated listings, discover curated
+              engineering opportunities from startups and leading technology
+              companies in one place.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            <div className="rounded-2xl border border-white/8 bg-[#1a1820] p-6">
+              <div className="text-4xl">⚡</div>
+
+              <h3 className="mt-5 text-xl font-semibold text-white">
+                Fresh Opportunities
+              </h3>
+
+              <p className="mt-3 text-sm leading-6 text-white/65">
+                New engineering jobs are added regularly so you never miss the
+                latest openings.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/8 bg-[#1a1820] p-6">
+              <div className="text-4xl">🎯</div>
+
+              <h3 className="mt-5 text-xl font-semibold text-white">
+                Powerful Search
+              </h3>
+
+              <p className="mt-3 text-sm leading-6 text-white/65">
+                Search jobs by technology stack, company, location, employment
+                type and keywords.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/8 bg-[#1a1820] p-6">
+              <div className="text-4xl">🏢</div>
+
+              <h3 className="mt-5 text-xl font-semibold text-white">
+                Top Companies
+              </h3>
+
+              <p className="mt-3 text-sm leading-6 text-white/65">
+                Explore opportunities from startups, unicorns and globally
+                recognized technology companies.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/8 bg-[#1a1820] p-6">
+              <div className="text-4xl">🚀</div>
+
+              <h3 className="mt-5 text-xl font-semibold text-white">
+                Developer Focused
+              </h3>
+
+              <p className="mt-3 text-sm leading-6 text-white/65">
+                Designed exclusively for software engineers looking for
+                frontend, backend, full-stack, AI and DevOps roles.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-12 rounded-2xl border border-indigo-500/20 bg-linear-to-r from-indigo-500/10 via-blue-500/5 to-transparent p-8">
+            <div className="grid gap-8 lg:grid-cols-3">
+              <div>
+                <h3 className="text-3xl font-semibold text-white">10,000+</h3>
+                <p className="mt-2 text-white/70">
+                  Engineering jobs available across multiple companies.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-3xl font-semibold text-white">500+</h3>
+                <p className="mt-2 text-white/70">
+                  Hiring companies ranging from startups to enterprise.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-3xl font-semibold text-white">24/7</h3>
+                <p className="mt-2 text-white/70">
+                  Search jobs anytime with a fast and responsive experience.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

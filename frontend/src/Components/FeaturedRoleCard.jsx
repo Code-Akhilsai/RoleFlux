@@ -24,7 +24,7 @@ const FeaturedRoleCard = ({
   tags,
 }) => {
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-white/8 bg-[#17151e] p-4 sm:p-4.5 lg:p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
+    <article className="flex h-full flex-col rounded-2xl border border-white/8 bg-[#17151e] p-4 sm:p-4.5 lg:p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]x">
       <div className="flex items-start justify-between gap-4">
         <div
           className={`flex h-11 w-11 items-center justify-center rounded-md border border-white/10 ${
@@ -44,11 +44,11 @@ const FeaturedRoleCard = ({
       </div>
 
       <div className="mt-7">
-        <h3 className="text-[1.35rem] sm:text-[1.5rem] lg:text-[1.7rem] font-semibold tracking-[-0.04em] text-white/92">
+        <h3 className="text-[1.35rem] sm:text-[1.5rem] lg:text-[1.7rem] font-semibold tracking-[-0.04em] text-white/92 lg:w-90">
           {title}
         </h3>
         <p className="mt-2 text-sm font-medium text-white/60 sm:text-[0.95rem]">
-          {company} • {location} • {salary}
+          {company} • {location} {salary}
         </p>
       </div>
 
@@ -63,10 +63,6 @@ const FeaturedRoleCard = ({
             </span>
           ))}
         </div>
-
-        <button className="mt-5 w-full rounded-md border border-white/12 bg-transparent py-3 text-sm font-semibold text-white/88 transition hover:border-white/20 hover:bg-white/4">
-          Apply Now
-        </button>
       </div>
     </article>
   );
