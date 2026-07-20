@@ -82,10 +82,10 @@ const Home = () => {
             <div className="flex flex-1 items-center justify-center px-4 py-10 sm:py-12 lg:py-14 lg:border-r lg:border-white/10">
               <div className="text-center">
                 <p className="text-[clamp(2.35rem,8vw,4.1rem)] font-semibold leading-none tracking-[-0.06em] bg-[linear-gradient(180deg,#f5efff_0%,#d8ccff_42%,#b9a3ff_100%)] bg-clip-text text-transparent lg:text-[clamp(2rem,4vw,3.25rem)]">
-                  10,000+
+                  Curated
                 </p>
                 <p className="mt-2 text-[0.68rem] sm:text-[0.78rem] font-semibold uppercase tracking-[0.28em] text-white/82">
-                  Active Roles
+                  Engineering Jobs
                 </p>
               </div>
             </div>
@@ -93,21 +93,21 @@ const Home = () => {
             <div className="relative flex flex-1 items-center justify-center px-4 py-10 sm:py-12 lg:py-14 lg:border-r lg:border-white/10 before:absolute before:inset-y-10 before:left-4 before:w-px before:bg-white/10 after:absolute after:inset-y-10 after:right-4 after:w-px after:bg-white/10 sm:before:left-6 sm:after:right-6 lg:before:hidden lg:after:hidden">
               <div className="text-center">
                 <p className="text-[clamp(2.35rem,8vw,4.1rem)] font-semibold leading-none tracking-[-0.06em] bg-[linear-gradient(180deg,#f5efff_0%,#d8ccff_42%,#b9a3ff_100%)] bg-clip-text text-transparent lg:text-[clamp(2rem,4vw,3.25rem)]">
-                  500+
+                  Trusted
                 </p>
                 <p className="mt-2 text-[0.68rem] sm:text-[0.78rem] font-semibold uppercase tracking-[0.28em] text-white/82">
-                  Top Companies
+                  Hiring Companies
                 </p>
               </div>
             </div>
 
             <div className="flex flex-1 items-center justify-center px-4 py-10 sm:py-12 lg:py-14">
               <div className="text-center">
-                <p className="text-[clamp(1.95rem,6.8vw,3.3rem)] font-semibold leading-[0.95] tracking-tighter bg-[linear-gradient(180deg,#efe8ff_0%,#ccb8ff_38%,#a88cff_100%)] bg-clip-text text-transparent sm:text-[clamp(2.2rem,7.1vw,3.7rem)] lg:text-[clamp(1.8rem,3.6vw,3rem)]">
-                  Updated Hourly
+                <p className="text-[clamp(2rem,6.8vw,3.3rem)] font-semibold leading-[0.95] tracking-tighter bg-[linear-gradient(180deg,#efe8ff_0%,#ccb8ff_38%,#a88cff_100%)] bg-clip-text text-transparent sm:text-[clamp(2.2rem,7.1vw,3.7rem)] lg:text-[clamp(1.8rem,3.6vw,3rem)]">
+                  Fast
                 </p>
                 <p className="mt-2 text-[0.68rem] sm:text-[0.78rem] font-semibold uppercase tracking-[0.28em] text-white/82">
-                  Real-time Feed
+                  Job Discovery
                 </p>
               </div>
             </div>
@@ -217,25 +217,33 @@ const Home = () => {
           </div>
 
           <div className="mt-12 rounded-2xl border border-indigo-500/20 bg-linear-to-r from-indigo-500/10 via-blue-500/5 to-transparent p-8">
-            <div className="grid gap-8 lg:grid-cols-3">
+            <div className="grid gap-20 lg:grid-cols-3">
               <div>
-                <h3 className="text-3xl font-semibold text-white">10,000+</h3>
+                <h3 className="text-3xl font-semibold text-white">
+                  Curated Listings
+                </h3>
                 <p className="mt-2 text-white/70">
-                  Engineering jobs available across multiple companies.
+                  Quality software engineering opportunities gathered in one
+                  place.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-3xl font-semibold text-white">500+</h3>
+                <h3 className="text-3xl font-semibold text-white">
+                  Trusted Sources
+                </h3>
                 <p className="mt-2 text-white/70">
-                  Hiring companies ranging from startups to enterprise.
+                  Explore roles from startups and established technology
+                  companies.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-3xl font-semibold text-white">24/7</h3>
+                <h3 className="text-3xl font-semibold text-white">
+                  Built for Developers
+                </h3>
                 <p className="mt-2 text-white/70">
-                  Search jobs anytime with a fast and responsive experience.
+                  Search by tech stack, company, location, and engineering role.
                 </p>
               </div>
             </div>
@@ -287,32 +295,51 @@ const Home = () => {
       </section>
 
       <footer className="mt-16 sm:mt-20 lg:mt-24 border-t border-white/6 bg-[#0f0d13] px-4 sm:px-5 lg:px-8 py-8 sm:py-10 lg:py-12">
-        <div className="mx-auto max-w-7xl ">
+        <div className="mx-auto max-w-7xl">
           <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:justify-between sm:text-left gap-6 sm:gap-4">
             <div className="flex items-center gap-2">
-              <img src={Logo} className="h-6 rounded-2xl sm:h-7 lg:h-8" />
+              <img
+                src={Logo}
+                className="h-6 rounded-2xl sm:h-7 lg:h-8"
+                alt="RoleFlux"
+              />
               <span className="font-semibold text-white text-sm sm:text-base">
                 RoleFlux
               </span>
             </div>
 
             <nav className="flex flex-wrap justify-center sm:justify-start gap-6 sm:gap-8 text-sm sm:text-base">
-              <a href="#" className="text-white/70 transition hover:text-white">
+              <a
+                href="/about"
+                className="text-white/70 transition hover:text-white"
+              >
                 About
               </a>
-              <a href="#" className="text-white/70 transition hover:text-white">
-                Privacy
+
+              <a
+                href="/privacy-policy"
+                className="text-white/70 transition hover:text-white"
+              >
+                Privacy Policy
               </a>
-              <a href="#" className="text-white/70 transition hover:text-white">
-                Terms
+
+              <a
+                href="/terms-and-conditions"
+                className="text-white/70 transition hover:text-white"
+              >
+                Terms & Conditions
               </a>
-              <a href="#" className="text-white/70 transition hover:text-white">
+
+              <a
+                href="mailto:contact@roleflux.in"
+                className="text-white/70 transition hover:text-white"
+              >
                 Contact
               </a>
             </nav>
 
             <p className="text-xs sm:text-sm text-white/50">
-              © 2024 RoleFlux. All rights reserved.
+              © {new Date().getFullYear()} RoleFlux. All rights reserved.
             </p>
           </div>
         </div>
