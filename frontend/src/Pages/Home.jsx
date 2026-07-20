@@ -1,4 +1,3 @@
-import { FaSearch } from "react-icons/fa";
 import Logo from "../assets/roleflux_logo.png";
 import FeaturedRoleCard from "../Components/FeaturedRoleCard.jsx";
 import { useNavigate } from "react-router-dom";

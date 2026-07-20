@@ -43,13 +43,6 @@ const filterItems = [
   },
 ];
 
-const roleCounts = [
-  { label: "Engineering", count: 124 },
-  { label: "Product Design", count: 82 },
-  { label: "Data Science", count: 45 },
-  { label: "Marketing", count: 29 },
-];
-
 const JobMeta = ({ icon: Icon, children }) => (
   <span className="inline-flex items-center gap-1.5 rounded-md border border-white/8 bg-white/5 px-2.5 py-1 text-[0.72rem] font-medium text-white/80">
     <Icon className="h-3.5 w-3.5 text-[#8bb1ff]" />

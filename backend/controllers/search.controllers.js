@@ -1,5 +1,4 @@
 import axios from "axios";
-import client from "../db/redis.js";
 
 const searchController = async (req, res) => {
   const { searching, jobType, location } = req.query || {};
