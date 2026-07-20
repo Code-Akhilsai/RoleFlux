@@ -246,27 +246,41 @@ const Home = () => {
       <section className="mt-10 sm:mt-12 lg:mt-20 px-4 sm:px-5 lg:px-8 py-8 sm:py-10 lg:py-14">
         <div className="mx-auto max-w-7xl">
           <div className="rounded-2xl border border-white/8 bg-[#1a1820] p-6 sm:p-8 lg:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 lg:gap-8">
-              <div className="flex-1">
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-white">
-                  Get notified before the crowd.
-                </h3>
-                <p className="mt-3 text-sm sm:text-base leading-6 text-white/70">
-                  Join 12,000+ engineers receiving weekly custom job alerts for
-                  roles at the top 1% of tech startups.
-                </p>
-              </div>
+            <div className="text-center">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-white">
+                Explore Jobs by Engineering Domain
+              </h3>
 
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-3 lg:gap-4 shrink-0">
-                <input
-                  type="email"
-                  placeholder="email@company.com"
-                  className="w-full sm:w-auto px-4 py-3 sm:py-3.5 lg:py-3.5 rounded-lg bg-white/6 border border-white/12 text-white placeholder-white/40 text-sm sm:text-base focus:outline-none focus:border-white/30 focus:bg-white/8 transition"
-                />
-                <button className="btn-primary text-white font-semibold text-sm sm:text-base px-6 sm:px-7 py-3 sm:py-3.5 lg:py-3.5 rounded-lg whitespace-nowrap">
-                  Join Digest
-                </button>
-              </div>
+              <p className="mt-3 max-w-2xl mx-auto text-sm sm:text-base leading-6 text-white/70">
+                Discover opportunities across today's most in-demand software
+                engineering fields.
+              </p>
+            </div>
+
+            <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {[
+                "Frontend",
+                "Backend",
+                "Full Stack",
+                "AI / ML",
+                "Cloud",
+                "DevOps",
+                "Data Engineering",
+                "Cyber Security",
+                "Mobile",
+                "UI / UX",
+                "QA Automation",
+                "Blockchain",
+              ].map((category) => (
+                <div
+                  key={category}
+                  className="rounded-xl border border-white/8 bg-white/4 px-5 py-6 text-center transition-all duration-300 hover:border-indigo-400/40 hover:bg-white/6"
+                >
+                  <h4 className="text-base font-semibold text-white">
+                    {category}
+                  </h4>
+                </div>
+              ))}
             </div>
           </div>
         </div>
