@@ -11,7 +11,7 @@ const searchController = async (req, res) => {
   const THREE_DAYS_IN_SECONDS = 3 * 24 * 60 * 60;
   const cacheKey = `search:${query}:${employmentTypes}:${jobLocation}`;
   const cacheSearch = await client.get(cacheKey);
-  if (cacheSearch) return res.status(200).json(JSON.parse(cacheKey));
+  if (cacheSearch) return res.status(200).json(JSON.parse(cacheSearch));
 
   const options = {
     method: "GET",
