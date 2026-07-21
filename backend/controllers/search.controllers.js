@@ -9,9 +9,9 @@ const searchController = async (req, res) => {
   const jobLocation = location || "";
 
   const THREE_DAYS_IN_SECONDS = 3 * 24 * 60 * 60;
-
-  const cacheSearch = await client.get(query);
-  if (cacheSearch) return res.status(200).json(JSON.parse(cacheSearch));
+  const cacheKey = `search:${query}:${employmentTypes}:${jobLocation}`;
+  const cacheSearch = await client.get(cacheKey);
+  if (cacheSearch) return res.status(200).json(JSON.parse(cacheKey));
 
   const options = {
     method: "GET",
@@ -35,7 +35,7 @@ const searchController = async (req, res) => {
     const response = await axios.request(options);
 
     await client.setEx(
-      query,
+      cacheKey,
       THREE_DAYS_IN_SECONDS,
       JSON.stringify(response.data.data.jobs),
     );
