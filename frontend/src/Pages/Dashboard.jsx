@@ -11,7 +11,7 @@ import profile from "../assets/profile.png";
 import { useState } from "react";
 import Profilebox from "../Components/Profilebox";
 import axios from "axios";
-import { useActionData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import company from "../assets/company.png";
 import { FaRegBookmark } from "react-icons/fa";
