@@ -1,4 +1,5 @@
 import axios from "axios";
+import client from "../db/redis.js";
 
 const searchController = async (req, res) => {
   const { searching, jobType, location } = req.query || {};
@@ -6,6 +7,11 @@ const searchController = async (req, res) => {
   const query = searching;
   const employmentTypes = jobType && jobType !== "ALL" ? jobType : "";
   const jobLocation = location || "";
+
+  const THREE_DAYS_IN_SECONDS = 3 * 24 * 60 * 60;
+
+  const cacheSearch = await client.get(query);
+  if (cacheSearch) return res.status(200).json(JSON.parse(cacheSearch));
 
   const options = {
     method: "GET",
@@ -27,6 +33,12 @@ const searchController = async (req, res) => {
 
   try {
     const response = await axios.request(options);
+
+    await client.setEx(
+      query,
+      THREE_DAYS_IN_SECONDS,
+      JSON.stringify(response.data.data.jobs),
+    );
 
     return res.send(response.data.data.jobs);
   } catch (error) {
