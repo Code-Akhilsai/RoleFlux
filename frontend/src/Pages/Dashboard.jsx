@@ -11,9 +11,11 @@ import profile from "../assets/profile.png";
 import { useState } from "react";
 import Profilebox from "../Components/Profilebox";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useActionData, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import company from "../assets/company.png";
+import { FaRegBookmark } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa";
 
 const filterItems = [
   {
@@ -61,8 +63,8 @@ const Dashboard = () => {
   const [searching, setSearch] = useState("");
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [backbtn, setBackbtn] = useState(true);
+  const [bookmarkedJobs, setBookmarkedJobs] = useState([]);
   const nav = useNavigate();
 
   const handleFilterSelect = (filterKey, option) => {
@@ -132,6 +134,14 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleBookmark = (jobId) => {
+    setBookmarkedJobs((prev) =>
+      prev.includes(jobId)
+        ? prev.filter((id) => id !== jobId)
+        : [...prev, jobId],
+    );
   };
 
   useEffect(() => {
@@ -410,13 +420,24 @@ const Dashboard = () => {
                       </div>
                     </div>
 
-                    <div className="flex lg:justify-end">
+                    <div className="flex  flex-row justtify-center items-center gap-8 lg:justify-end">
+                      {bookmarkedJobs.includes(job_id) ? (
+                        <FaBookmark
+                          size={19}
+                          onClick={() => handleBookmark(job_id)}
+                        />
+                      ) : (
+                        <FaRegBookmark
+                          size={19}
+                          onClick={() => handleBookmark(job_id)}
+                        />
+                      )}
                       <a
                         href={job_apply_link}
                         target="_blank"
                         className="w-full"
                       >
-                        <button className="btn-primary h-10 w-full rounded-md px-5 text-sm font-semibold text-white sm:w-auto sm:min-w-28">
+                        <button className="btn-primary h-10 w-40 rounded-md px-5 text-sm font-semibold text-white sm:w-auto sm:min-w-28">
                           Apply Now
                         </button>
                       </a>

@@ -7,7 +7,7 @@ const jobsController = async (req, res) => {
   if (cachedJobs) return res.status(200).json(JSON.parse(cachedJobs));
 
   const query = "developer jobs in India";
-
+  const THREE_DAYS_IN_SECONDS = 3 * 24 * 60 * 60;
   const options = {
     method: "GET",
     url: "https://jsearch.p.rapidapi.com/search-v2",
@@ -29,7 +29,7 @@ const jobsController = async (req, res) => {
 
     await client.setEx(
       "jobs:",
-      60 * 60 * 24,
+      THREE_DAYS_IN_SECONDS,
       JSON.stringify(response.data.data.jobs),
     );
 
