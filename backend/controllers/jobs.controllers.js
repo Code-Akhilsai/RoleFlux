@@ -13,7 +13,7 @@ const jobsController = async (req, res) => {
     url: "https://jsearch.p.rapidapi.com/search-v2",
     params: {
       query,
-      num_pages: "1",
+      num_pages: "3",
       country: "in",
       date_posted: "month",
     },
