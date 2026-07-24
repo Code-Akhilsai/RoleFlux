@@ -9,6 +9,7 @@ import Login_router from "../routes/login.routes.js";
 import Logout_router from "../routes/logout.routes.js";
 import jobsRouter from "../routes/jobs.routes.js";
 import search_router from "../routes/search.routes.js";
+import savedjobs_Router from "../routes/savedjobs.routes.js";
 
 dotenv.config();
 
@@ -32,7 +33,8 @@ app.use("/api/v1", Profile_router);
 app.use("/api/v1", Login_router);
 app.use("/api/v1", Logout_router);
 app.use("/api/v1", jobsRouter);
-app.use("/api/v1/", search_router);
+app.use("/api/v1", search_router);
+app.use("/api/v1", savedjobs_Router);
 
 await dbconnection();
 app.listen(port, () =>

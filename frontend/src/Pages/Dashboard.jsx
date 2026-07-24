@@ -64,7 +64,7 @@ const Dashboard = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [backbtn, setBackbtn] = useState(true);
-  const [bookmarkedJobs, setBookmarkedJobs] = useState([]);
+  const [saveJob, setSaveJob] = useState([]);
   const nav = useNavigate();
 
   const handleFilterSelect = (filterKey, option) => {
@@ -137,12 +137,51 @@ const Dashboard = () => {
   };
 
   const handleBookmark = (jobId) => {
-    setBookmarkedJobs((prev) =>
-      prev.includes(jobId)
-        ? prev.filter((id) => id !== jobId)
-        : [...prev, jobId],
-    );
+    const alreadySaved = saveJob.some((job) => job.job_id === jobId);
+
+    if (alreadySaved) {
+      setSaveJob((prev) => prev.filter((job) => job.job_id !== jobId));
+    } else {
+      const bookmarkedJob = jobs.find((job) => job.job_id === jobId);
+
+      if (!bookmarkedJob) return;
+
+      setSaveJob((prev) => [...prev, bookmarkedJob]);
+    }
   };
+
+  const savejobDB = async () => {
+    const jobsToSave = saveJob.map((job) => ({
+      job_id: job.job_id,
+      job_title: job.job_title,
+      employer_name: job.employer_name,
+      job_location: job.job_location,
+      employer_logo: job.employer_logo,
+      job_apply_link: job.job_apply_link,
+      job_employment_type: job.job_employment_type,
+      job_is_remote: job.job_is_remote,
+      job_publisher: job.job_publisher,
+    }));
+    try {
+      const response = await axios.post(
+        `${backend}/api/v1/savejob`,
+        {
+          jobs: jobsToSave,
+        },
+        { withCredentials: true },
+      );
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (saveJob.length > 0) {
+      savejobDB();
+    }
+  }, [saveJob]);
 
   useEffect(() => {
     fetchJobs();
@@ -421,7 +460,7 @@ const Dashboard = () => {
                     </div>
 
                     <div className="flex  flex-row justtify-center items-center gap-8 lg:justify-end">
-                      {bookmarkedJobs.includes(job_id) ? (
+                      {saveJob.some((job) => job.job_id === job_id) ? (
                         <FaBookmark
                           size={19}
                           onClick={() => handleBookmark(job_id)}
