@@ -150,38 +150,36 @@ const Dashboard = () => {
     }
   };
 
-  const savejobDB = async () => {
-    const jobsToSave = saveJob.map((job) => ({
-      job_id: job.job_id,
-      job_title: job.job_title,
-      employer_name: job.employer_name,
-      job_location: job.job_location,
-      employer_logo: job.employer_logo,
-      job_apply_link: job.job_apply_link,
-      job_employment_type: job.job_employment_type,
-      job_is_remote: job.job_is_remote,
-      job_publisher: job.job_publisher,
-    }));
-    try {
-      const response = await axios.post(
-        `${backend}/api/v1/savejob`,
-        {
-          jobs: jobsToSave,
-        },
-        { withCredentials: true },
-      );
-
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    if (saveJob.length > 0) {
-      savejobDB();
-    }
-  }, [saveJob]);
+    const savejobDB = async () => {
+      try {
+        const jobsToSave = saveJob.map((job) => ({
+          job_id: job.job_id,
+          job_title: job.job_title,
+          employer_name: job.employer_name,
+          job_location: job.job_location,
+          employer_logo: job.employer_logo,
+          job_apply_link: job.job_apply_link,
+          job_employment_type: job.job_employment_type,
+          job_is_remote: job.job_is_remote,
+          job_publisher: job.job_publisher,
+        }));
+
+        console.log("Saving:", jobsToSave);
+
+        await axios.post(
+          `${backend}/api/v1/savejob`,
+          { jobs: jobsToSave },
+          { withCredentials: true },
+        );
+        console.log("Saved successfully");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    savejobDB();
+  }, [saveJob, backend]);
 
   useEffect(() => {
     fetchJobs();
