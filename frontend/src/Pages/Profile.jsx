@@ -87,7 +87,7 @@ const Profile = () => {
         });
         setData(res.data.user ?? {});
 
-        // ✅ Fetch saved jobs - USE GET with correct endpoint
+        // Fetch saved jobs - USE GET with correct endpoint
         const jobsRes = await axios.get(`${backend}/api/v1/savejob`, {
           withCredentials: true,
         });
@@ -125,7 +125,7 @@ const Profile = () => {
     }
   };
 
-  // ✅ Handle unsaving job
+  //  Handle unsaving job
   const handleUnsaveJob = async (jobToRemove) => {
     try {
       // Remove job from local state immediately

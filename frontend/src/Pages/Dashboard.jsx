@@ -158,7 +158,7 @@ const Dashboard = () => {
   useEffect(() => {
     const loadSavedJobs = async () => {
       try {
-        setLoadingJobs(true); // ✅ Set loading
+        setLoadingJobs(true);
         const res = await axios.get(`${backend}/api/v1/savejob`, {
           withCredentials: true,
         });
