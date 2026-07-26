@@ -10,6 +10,7 @@ import {
   MapPin,
   Sparkles,
   Bookmark,
+  X,
 } from "lucide-react";
 
 const backend = import.meta.env.VITE_BACKEND_URL;
@@ -22,6 +23,7 @@ const toSavedJobCard = (job, index) => {
       company: "Saved role",
       location: "Location unavailable",
       tags: [],
+      job_id: job,
     };
   }
 
@@ -62,11 +64,13 @@ const toSavedJobCard = (job, index) => {
       job?.job_min_salary,
     link: job?.job_apply_link ?? job?.apply_link ?? job?.url,
     tags,
+    job_id: job?.job_id,
   };
 };
 
 const Profile = () => {
   const [data, setData] = useState({});
+  const [savedJobs, setSavedJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -78,10 +82,22 @@ const Profile = () => {
         setLoading(true);
         setError("");
 
+        // Fetch user profile
         const res = await axios.get(`${backend}/api/v1/profile`, {
           withCredentials: true,
         });
         setData(res.data.user ?? {});
+
+        // ✅ Fetch saved jobs - USE GET with correct endpoint
+        const jobsRes = await axios.get(`${backend}/api/v1/savejob`, {
+          withCredentials: true,
+        });
+
+        const jobs = jobsRes.data?.jobs ?? [];
+        const transformedJobs = jobs.map((job, index) =>
+          toSavedJobCard(job, index),
+        );
+        setSavedJobs(transformedJobs);
       } catch (fetchError) {
         console.error("Profile load error:", fetchError);
         setError("We could not load your profile right now.");
@@ -110,9 +126,51 @@ const Profile = () => {
     }
   };
 
-  const savedJobs = Array.isArray(data.savedJobs)
-    ? data.savedJobs.map(toSavedJobCard)
-    : [];
+  // ✅ Handle unsaving job
+  const handleUnsaveJob = async (jobToRemove) => {
+    try {
+      // Remove job from local state immediately
+      const updatedSavedJobs = savedJobs.filter(
+        (job) => job.job_id !== jobToRemove.job_id,
+      );
+      setSavedJobs(updatedSavedJobs);
+
+      // Get original jobs from backend
+      const jobsRes = await axios.get(`${backend}/api/v1/savejob`, {
+        withCredentials: true,
+      });
+      const originalJobs = jobsRes.data?.jobs ?? [];
+
+      // Filter out the unsaved job
+      const filteredJobs = originalJobs.filter(
+        (job) => job.job_id !== jobToRemove.job_id,
+      );
+
+      // Update backend with filtered jobs
+      await axios.post(
+        `${backend}/api/v1/savejob`,
+        { jobs: filteredJobs },
+        { withCredentials: true },
+      );
+
+      console.log("Job unsaved successfully");
+    } catch (error) {
+      console.error("Error unsaving job:", error);
+      // Restore the job if request fails
+      try {
+        const jobsRes = await axios.get(`${backend}/api/v1/savejob`, {
+          withCredentials: true,
+        });
+        const jobs = jobsRes.data?.jobs ?? [];
+        const transformedJobs = jobs.map((job, index) =>
+          toSavedJobCard(job, index),
+        );
+        setSavedJobs(transformedJobs);
+      } catch (restoreError) {
+        console.error("Error restoring job:", restoreError);
+      }
+    }
+  };
 
   const initials = (data.username ?? data.email ?? "U")
     .slice(0, 2)
@@ -282,7 +340,14 @@ const Profile = () => {
                       <span className="inline-flex rounded-full border border-emerald-400/16 bg-emerald-400/10 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-emerald-200">
                         Saved
                       </span>
-                      <BriefcaseBusiness className="h-5 w-5 text-white/30 transition group-hover:text-white/55" />
+                      <button
+                        type="button"
+                        onClick={() => handleUnsaveJob(job)}
+                        className="rounded-full border border-white/10 bg-white/5 p-1.5 text-white/40 transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400"
+                        title="Unsave this job"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
                     </div>
 
                     <h3 className="mt-5 text-xl font-semibold tracking-[-0.04em] text-white">

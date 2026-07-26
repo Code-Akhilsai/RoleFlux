@@ -22,4 +22,25 @@ const savedjobsController = async (req, res) => {
   }
 };
 
-export default savedjobsController;
+// GET - Fetch saved jobs
+const getSavedJobsController = async (req, res) => {
+  const { _id } = req.user ?? {};
+
+  try {
+    if (!_id) {
+      return res.status(401).json({ message: "User not authenticated" });
+    }
+
+    const savedJobsDoc = await SavedJob.findOne({ userId: _id });
+
+    if (!savedJobsDoc) {
+      return res.status(200).json({ jobs: [] });
+    }
+
+    return res.status(200).json({ jobs: savedJobsDoc.jobs });
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to fetch saved jobs" });
+  }
+};
+
+export { savedjobsController, getSavedJobsController };

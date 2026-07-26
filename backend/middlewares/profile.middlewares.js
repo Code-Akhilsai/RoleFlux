@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+
 const profile_middleware = async (req, res, next) => {
   const token = req.cookies?.token;
 
@@ -7,6 +8,7 @@ const profile_middleware = async (req, res, next) => {
   }
   try {
     const decode = await jwt.verify(token, process.env.SECREATE_KEY);
+
     req.user = decode;
 
     return next();

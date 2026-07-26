@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import company from "../assets/company.png";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
+import { useRef } from "react";
 
 const filterItems = [
   {
@@ -65,6 +66,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [backbtn, setBackbtn] = useState(true);
   const [saveJob, setSaveJob] = useState([]);
+  const isInitialMount = useRef(true);
+  const [loadingJobs, setLoadingJobs] = useState(true);
   const nav = useNavigate();
 
   const handleFilterSelect = (filterKey, option) => {
@@ -150,7 +153,31 @@ const Dashboard = () => {
     }
   };
 
+  //Load saved jobs on mount
+
   useEffect(() => {
+    const loadSavedJobs = async () => {
+      try {
+        setLoadingJobs(true); // ✅ Set loading
+        const res = await axios.get(`${backend}/api/v1/savejob`, {
+          withCredentials: true,
+        });
+        setSaveJob(res.data?.jobs ?? []);
+      } catch (error) {
+        console.log("Error loading saved jobs:", error);
+      } finally {
+        setLoadingJobs(false);
+      }
+    };
+
+    loadSavedJobs();
+  }, [backend]);
+
+  useEffect(() => {
+    if (loadingJobs || isInitialMount.current) {
+      if (!loadingJobs) isInitialMount.current = false;
+      return;
+    }
     const savejobDB = async () => {
       try {
         const jobsToSave = saveJob.map((job) => ({
@@ -179,7 +206,7 @@ const Dashboard = () => {
     };
 
     savejobDB();
-  }, [saveJob, backend]);
+  }, [saveJob, loadingJobs, backend]);
 
   useEffect(() => {
     fetchJobs();
