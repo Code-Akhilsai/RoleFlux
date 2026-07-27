@@ -55,6 +55,15 @@ const JobMeta = ({ icon: Icon, children }) => (
 const backend = import.meta.env.VITE_BACKEND_URL;
 
 const Dashboard = () => {
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const blockBack = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+    window.addEventListener("popstate", blockBack);
+    return () => window.removeEventListener("popstate", blockBack);
+  }, []);
+
   const [open, setOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -94,7 +103,7 @@ const Dashboard = () => {
       });
       if (res.status === 200) {
         alert("Logout successful");
-        return nav("/");
+        return nav("/", { replace: true });
       } else {
         alert("Logout failed");
       }

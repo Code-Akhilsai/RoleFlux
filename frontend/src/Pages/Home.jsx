@@ -1,6 +1,7 @@
 import Logo from "../assets/roleflux_logo.png";
 import FeaturedRoleCard from "../Components/FeaturedRoleCard.jsx";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const featuredRoles = [
   {
@@ -36,6 +37,14 @@ const featuredRoles = [
 ];
 
 const Home = () => {
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const blockBack = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+    window.addEventListener("popstate", blockBack);
+    return () => window.removeEventListener("popstate", blockBack);
+  }, []);
   const nav = useNavigate();
 
   return (

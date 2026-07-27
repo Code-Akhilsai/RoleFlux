@@ -21,6 +21,12 @@ const userSchema = new mongoose.Schema(
       required: true,
       minLength: [8, "password must be eight digits"],
     },
+
+    profilePhoto: String,
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

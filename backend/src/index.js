@@ -1,6 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+
 import cookieParser from "cookie-parser";
 import router from "../routes/register.routes.js";
 import Profile_router from "../routes/profile.routes.js";
@@ -10,8 +13,7 @@ import Logout_router from "../routes/logout.routes.js";
 import jobsRouter from "../routes/jobs.routes.js";
 import search_router from "../routes/search.routes.js";
 import savedjobs_Router from "../routes/savedjobs.routes.js";
-
-dotenv.config();
+import google_Router from "../routes/google.routes.js";
 
 const app = express();
 
@@ -24,6 +26,12 @@ app.use(
     credentials: true,
   }),
 );
+
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  next();
+});
 app.use(cookieParser());
 
 //routes
@@ -35,6 +43,7 @@ app.use("/api/v1", Logout_router);
 app.use("/api/v1", jobsRouter);
 app.use("/api/v1", search_router);
 app.use("/api/v1", savedjobs_Router);
+app.use("/api/v1", google_Router);
 
 await dbconnection();
 app.listen(port, () =>

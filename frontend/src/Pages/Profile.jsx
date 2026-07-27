@@ -115,7 +115,7 @@ const Profile = () => {
       });
       if (res.status === 200) {
         alert("Logout successful");
-        navigate("/");
+        navigate("/", { replace: true });
       } else {
         alert("Logout failed");
       }
@@ -140,7 +140,6 @@ const Profile = () => {
       });
       const originalJobs = jobsRes.data?.jobs ?? [];
 
-      // Filter out the unsaved job
       const filteredJobs = originalJobs.filter(
         (job) => job.job_id !== jobToRemove.job_id,
       );
@@ -155,7 +154,7 @@ const Profile = () => {
       console.log("Job unsaved successfully");
     } catch (error) {
       console.error("Error unsaving job:", error);
-      // Restore the job if request fails
+
       try {
         const jobsRes = await axios.get(`${backend}/api/v1/savejob`, {
           withCredentials: true,

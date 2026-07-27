@@ -65,7 +65,7 @@ export default function Login() {
     );
 
     if (res.status == 200) {
-      nav("/dashboard");
+      nav("/dashboard", { replace: true });
     } else {
       alert("Login is failed");
     }
@@ -142,23 +142,6 @@ export default function Login() {
               ) : null}
             </div>
 
-            {/* Remember & Forgot */}
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center text-white cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="mr-2 w-4 h-4 rounded bg-white/10 border-white/20 accent-purple-500"
-                />
-                Remember me
-              </label>
-              <a
-                href="#"
-                className="text-purple-400 hover:text-purple-300 transition-colors"
-              >
-                Forgot password?
-              </a>
-            </div>
-
             {/* Submit Button */}
             <button
               type="submit"
@@ -183,12 +166,6 @@ export default function Login() {
                 <path d="M12.48 10.92v3.28h2.84c.12-1.64.72-2.95 1.32-3.28h1.04v-2.84h-.68c-.36 0-.68.02-1.04.07v-1.4c-.32-.04-.68-.07-1.04-.07-.76 0-1.48.14-2.04.42v1.64h-.96z" />
               </svg>
               Google
-            </button>
-            <button className="bg-white/10 hover:bg-white/20 border border-white/20 text-white py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 font-medium">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
-              </svg>
-              GitHub
             </button>
           </div>
 
