@@ -10,7 +10,7 @@ import app from "../firebase.js";
 const auth = getAuth(app);
 const backend = import.meta.env.VITE_BACKEND_URL;
 
-export default function Login() {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -248,4 +248,5 @@ export default function Login() {
       </div>
     </div>
   );
-}
+};
+export default Login;
