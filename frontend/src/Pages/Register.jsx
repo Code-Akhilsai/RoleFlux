@@ -146,7 +146,7 @@ const Register = () => {
   // If verification sent, show verification screen
   if (verificationSent) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-[#15121b] relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center p-6 bg-[#15121b] relative overflow-hidden ">
         <div
           className="absolute inset-0 bg-gradient-radial from-indigo-500/10 via-transparent to-transparent pointer-events-none"
           style={{
@@ -209,11 +209,11 @@ const Register = () => {
         }}
       ></div>
 
-      <div className="relative w-full max-w-md">
+      <div className="relative w-full -mt-4 max-w-md">
         <div className="p-0.5 rounded-3xl bg-linear-to-br from-white/45 to-white/8 shadow-2xl">
           <div className="rounded-3xl p-8 bg-slate-900/92 backdrop-blur-xl text-gray-200">
             <div className="mb-7 text-center flex flex-col items-center">
-              <img src={logo} className="h-20 w-20 rounded-2xl mb-4" />
+              <img src={logo} className="h-20 w-20 rounded-2xl mb-3" />
               <h1 className="text-2xl font-black">Create account</h1>
               <p className="mt-2.5 text-slate-400 text-sm leading-relaxed">
                 Sign up with Google or email & password.
@@ -260,7 +260,7 @@ const Register = () => {
               <div className="flex-1 h-px bg-slate-600/30"></div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-2.5">
               <div className="space-y-2">
                 <label className="text-sm font-semibold">Username</label>
                 <input
@@ -342,7 +342,7 @@ const Register = () => {
               >
                 {loading ? "Registering..." : "Register"}
               </button>
-              <p className="text-center text-white/60 text-sm mt-6">
+              <p className="text-center text-white/60 text-sm mt-5">
                 Already have an account?{" "}
                 <a
                   onClick={() => nav("/login")}

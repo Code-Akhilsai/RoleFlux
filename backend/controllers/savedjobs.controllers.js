@@ -12,7 +12,7 @@ const savedjobsController = async (req, res) => {
     await SavedJob.findOneAndUpdate(
       { userId: _id },
       { $set: { jobs } },
-      { upsert: true, new: true },
+      { upsert: true, returnDocument: "after" },
     );
 
     return res.status(200).json({ message: "Successfully saved" });
