@@ -77,6 +77,7 @@ const Dashboard = () => {
   const [saveJob, setSaveJob] = useState([]);
   const isInitialMount = useRef(true);
   const [loadingJobs, setLoadingJobs] = useState(true);
+
   const nav = useNavigate();
 
   const handleFilterSelect = (filterKey, option) => {
@@ -217,7 +218,20 @@ const Dashboard = () => {
     savejobDB();
   }, [saveJob, loadingJobs, backend]);
 
+  const fetchUserData = async () => {
+    try {
+      const res = await axios.get(`${backend}/api/v1/profile`, {
+        withCredentials: true,
+      });
+
+      const username = res.data?.user?.username;
+      localStorage.setItem("username", username);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
   useEffect(() => {
+    fetchUserData();
     fetchJobs();
   }, []);
 
@@ -242,11 +256,10 @@ const Dashboard = () => {
               aria-haspopup="menu"
               aria-expanded={open}
             >
-              <img
-                src={profile}
-                alt="Profile menu"
-                className="h-full w-full object-cover"
-              />
+              <span className="flex h-full w-full items-center justify-center text-sm font-medium">
+                {localStorage.getItem("username")?.slice(0, 2).toUpperCase() ||
+                  "U"}
+              </span>
             </button>
 
             {open ? (
