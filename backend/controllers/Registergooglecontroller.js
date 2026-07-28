@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { sendVerificationEmail } from "./verifyEmailController.js";
 
 const registerGoogleController = async (req, res) => {
-  const { email, username, profilePhoto } = req.body;
+  const { email, username } = req.body;
 
   try {
     if (!email || !username) {
@@ -33,7 +33,6 @@ const registerGoogleController = async (req, res) => {
             _id: user._id,
             username: user.username,
             email: user.email,
-            profilePhoto: user.profilePhoto,
           },
         });
       } else {
@@ -57,7 +56,7 @@ const registerGoogleController = async (req, res) => {
       username: username + "_" + Date.now().toString().slice(-4),
       email,
       password: jwt.sign({ email }, process.env.SECREATE_KEY),
-      profilePhoto: profilePhoto || null,
+
       isEmailVerified: false,
     });
 
