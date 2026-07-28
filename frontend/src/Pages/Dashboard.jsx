@@ -7,7 +7,6 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import logo from "../assets/roleflux_logo.png";
-import profile from "../assets/profile.png";
 import { useState } from "react";
 import Profilebox from "../Components/Profilebox";
 import axios from "axios";
