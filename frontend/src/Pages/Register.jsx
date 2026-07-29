@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import app from "../firebase.js";
+import { IoCheckbox } from "react-icons/io5";
 
 const auth = getAuth(app);
 
@@ -171,16 +172,29 @@ const Register = () => {
                 </p>
               </div>
 
-              <div className="bg-slate-800/50 rounded-2xl p-5 mb-6">
-                <p className="text-sm text-slate-300 leading-relaxed">
-                  ✅ Check your email inbox (and spam folder just in case)
-                </p>
-                <p className="text-sm text-slate-300 leading-relaxed mt-3">
-                  ✅ Click the verification link
-                </p>
-                <p className="text-sm text-slate-300 leading-relaxed mt-3">
-                  ✅ You'll be redirected to your dashboard
-                </p>
+              <div className="mb-6 rounded-2xl bg-slate-800/50 p-5">
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <IoCheckbox className="mt-0.5 h-4 w-4  shrink-0 text-green-500" />
+                    <p className="text-sm leading-relaxed text-slate-300">
+                      Check your email inbox (and spam folder just in case).
+                    </p>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <IoCheckbox className="mt-0.5 h-4 w-4  shrink-0 text-green-500" />
+                    <p className="text-sm leading-relaxed text-slate-300">
+                      Click the verification link.
+                    </p>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <IoCheckbox className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
+                    <p className="text-sm leading-relaxed text-slate-300">
+                      You'll be redirected to your dashboard.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <p className="text-center text-slate-400 text-sm">
