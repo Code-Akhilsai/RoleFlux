@@ -29,7 +29,6 @@ const userSchema = new mongoose.Schema(
 
     atsScore: {
       type: Number,
-      default: 0,
     },
     analyzedAt: {
       type: Date,
