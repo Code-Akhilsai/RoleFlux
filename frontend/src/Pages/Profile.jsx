@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
+  BriefcaseBusiness,
   Clock3,
   ExternalLink,
   LogOut,
@@ -11,6 +12,7 @@ import {
   Bookmark,
   X,
 } from "lucide-react";
+import ATSScoreChecker from "../Components/ATSScoreChecker";
 
 const backend = import.meta.env.VITE_BACKEND_URL;
 
@@ -87,7 +89,7 @@ const Profile = () => {
         });
         setData(res.data.user ?? {});
 
-        // Fetch saved jobs - USE GET with correct endpoint
+        // Fetch saved jobs
         const jobsRes = await axios.get(`${backend}/api/v1/savejob`, {
           withCredentials: true,
         });
@@ -115,7 +117,7 @@ const Profile = () => {
       });
       if (res.status === 200) {
         alert("Logout successful");
-        navigate("/", { replace: true });
+        navigate("/");
       } else {
         alert("Logout failed");
       }
@@ -125,7 +127,6 @@ const Profile = () => {
     }
   };
 
-  //  Handle unsaving job
   const handleUnsaveJob = async (jobToRemove) => {
     try {
       // Remove job from local state immediately
@@ -140,6 +141,7 @@ const Profile = () => {
       });
       const originalJobs = jobsRes.data?.jobs ?? [];
 
+      // Filter out the unsaved job
       const filteredJobs = originalJobs.filter(
         (job) => job.job_id !== jobToRemove.job_id,
       );
@@ -154,7 +156,7 @@ const Profile = () => {
       console.log("Job unsaved successfully");
     } catch (error) {
       console.error("Error unsaving job:", error);
-
+      // Restore the job if request fails
       try {
         const jobsRes = await axios.get(`${backend}/api/v1/savejob`, {
           withCredentials: true,
@@ -430,6 +432,8 @@ const Profile = () => {
               </div>
             )}
           </section>
+
+          <ATSScoreChecker score={data.atsScore} />
         </main>
       </div>
     </div>

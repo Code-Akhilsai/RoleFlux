@@ -26,6 +26,14 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+
+    atsScore: {
+      type: Number,
+      default: 0,
+    },
+    analyzedAt: {
+      type: Date,
+    },
   },
   { timestamps: true },
 );

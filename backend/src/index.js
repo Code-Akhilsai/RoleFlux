@@ -3,7 +3,6 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
-
 import cookieParser from "cookie-parser";
 import router from "../routes/register.routes.js";
 import Profile_router from "../routes/profile.routes.js";
@@ -14,6 +13,7 @@ import jobsRouter from "../routes/jobs.routes.js";
 import search_router from "../routes/search.routes.js";
 import savedjobs_Router from "../routes/savedjobs.routes.js";
 import google_Router from "../routes/google.routes.js";
+import analyseATS_Router from "../routes/analyseATS.routes.js";
 
 const app = express();
 
@@ -44,6 +44,7 @@ app.use("/api/v1", jobsRouter);
 app.use("/api/v1", search_router);
 app.use("/api/v1", savedjobs_Router);
 app.use("/api/v1", google_Router);
+app.use("/api/v1", analyseATS_Router);
 
 await dbconnection();
 app.listen(port, () =>
