@@ -2,6 +2,22 @@ import Logo from "../assets/roleflux_logo.png";
 import FeaturedRoleCard from "../Components/FeaturedRoleCard.jsx";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import freshjobs from "../assets/businessman.png";
+import search from "../assets/search.png";
+import company from "../assets/companies.png";
+import developer from "../assets/dev.png";
+import frontend from "../assets/icons/frontend.png";
+import backend from "../assets/icons/backend.png";
+import fullstack from "../assets/icons/fullstack.png";
+import ai from "../assets/icons/AI.png";
+import cloud from "../assets/icons/cloud.png";
+import devops from "../assets/icons/devops.png";
+import data from "../assets/icons/dataeng.png";
+import security from "../assets/icons/security.png";
+import mobile from "../assets/icons/mobile.png";
+import uiux from "../assets/icons/uiux.png";
+import qa from "../assets/icons/qa.png";
+import blockchain from "../assets/icons/blockchain.png";
 
 const featuredRoles = [
   {
@@ -37,6 +53,21 @@ const featuredRoles = [
 ];
 
 const Home = () => {
+  const stack = [
+    { name: "Frontend", icon: frontend },
+    { name: "Backend", icon: backend },
+    { name: "Full Stack", icon: fullstack },
+    { name: "AI / ML", icon: ai },
+    { name: "Cloud", icon: cloud },
+    { name: "DevOps", icon: devops },
+    { name: "Data Engineering", icon: data },
+    { name: "Cyber Security", icon: security },
+    { name: "Mobile", icon: mobile },
+    { name: "UI / UX", icon: uiux },
+    { name: "QA Automation", icon: qa },
+    { name: "Blockchain", icon: blockchain },
+  ];
+
   useEffect(() => {
     window.history.pushState(null, "", window.location.href);
     const blockBack = () => {
@@ -172,7 +203,13 @@ const Home = () => {
 
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             <div className="rounded-2xl border border-white/8 bg-[#1a1820] p-6">
-              <div className="text-4xl">⚡</div>
+              <div className="text-4xl">
+                <img
+                  src={freshjobs}
+                  alt="Fresh Opportunities"
+                  className="h-18 w-18"
+                />
+              </div>
 
               <h3 className="mt-5 text-xl font-semibold text-white">
                 Fresh Opportunities
@@ -185,7 +222,9 @@ const Home = () => {
             </div>
 
             <div className="rounded-2xl border border-white/8 bg-[#1a1820] p-6">
-              <div className="text-4xl">🎯</div>
+              <div className="text-4xl">
+                <img src={search} alt="Powerful Search" className="h-18 w-18" />
+              </div>
 
               <h3 className="mt-5 text-xl font-semibold text-white">
                 Powerful Search
@@ -198,7 +237,9 @@ const Home = () => {
             </div>
 
             <div className="rounded-2xl border border-white/8 bg-[#1a1820] p-6">
-              <div className="text-4xl">🏢</div>
+              <div className="text-4xl">
+                <img src={company} alt="Top Companies" className="h-17 w-17" />
+              </div>
 
               <h3 className="mt-5 text-xl font-semibold text-white">
                 Top Companies
@@ -211,7 +252,13 @@ const Home = () => {
             </div>
 
             <div className="rounded-2xl border border-white/8 bg-[#1a1820] p-6">
-              <div className="text-4xl">🚀</div>
+              <div className="text-4xl">
+                <img
+                  src={developer}
+                  alt="Developer Focused"
+                  className="h-17 w-17"
+                />
+              </div>
 
               <h3 className="mt-5 text-xl font-semibold text-white">
                 Developer Focused
@@ -274,26 +321,19 @@ const Home = () => {
             </div>
 
             <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {[
-                "Frontend",
-                "Backend",
-                "Full Stack",
-                "AI / ML",
-                "Cloud",
-                "DevOps",
-                "Data Engineering",
-                "Cyber Security",
-                "Mobile",
-                "UI / UX",
-                "QA Automation",
-                "Blockchain",
-              ].map((category) => (
+              {stack.map((category) => (
                 <div
-                  key={category}
-                  className="rounded-xl border border-white/8 bg-white/4 px-5 py-6 text-center transition-all duration-300 hover:border-indigo-400/40 hover:bg-white/6"
+                  key={category.name}
+                  className="flex flex-col items-center rounded-xl border border-white/8 bg-white/4 px-5 py-6 transition-all duration-300 hover:border-indigo-400/40 hover:bg-white/6"
                 >
-                  <h4 className="text-base font-semibold text-white">
-                    {category}
+                  <img
+                    src={category.icon}
+                    alt={category.name}
+                    className="h-12 w-12 object-contain"
+                  />
+
+                  <h4 className="mt-4 text-base font-semibold text-white text-center">
+                    {category.name}
                   </h4>
                 </div>
               ))}
