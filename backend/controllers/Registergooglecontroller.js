@@ -65,7 +65,9 @@ const registerGoogleController = async (req, res) => {
       { expiresIn: "24h" },
     );
 
-    await sendVerificationEmail(email, verificationToken);
+    sendVerificationEmail(email, verificationToken).catch((err) =>
+      console.error("Background email send failed:", err),
+    );
 
     return res.status(200).json({
       message: "Account created! Check your email to verify.",
