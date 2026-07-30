@@ -25,7 +25,7 @@ const searchController = async (req, res) => {
       location: jobLocation,
     },
     headers: {
-      "x-rapidapi-key": process.env.RAPIDAPI_KEY,
+      "x-rapidapi-key": process.env.RAPIDAPI_KEY2,
       "x-rapidapi-host": "jsearch.p.rapidapi.com",
       "Content-Type": "application/json",
     },

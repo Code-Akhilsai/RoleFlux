@@ -18,7 +18,7 @@ const jobsController = async (req, res) => {
       date_posted: "month",
     },
     headers: {
-      "x-rapidapi-key": process.env.RAPIDAPI_KEY,
+      "x-rapidapi-key": process.env.RAPIDAPI_KEY1,
       "x-rapidapi-host": "jsearch.p.rapidapi.com",
       "Content-Type": "application/json",
     },
