@@ -6,7 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard.jsx";
 import Profile from "./Pages/Profile.jsx";
 import VerifyEmail from "./Pages/VerifyEmail.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import ProtectedRoute from "./Components/ProtectedRoute.jsx";
 import NotFound from "./Pages/NotFound.jsx";
 
 function App() {
