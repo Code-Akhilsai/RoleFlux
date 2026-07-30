@@ -88,7 +88,7 @@ const Dashboard = () => {
   };
 
   const profileNav = async () => {
-    const res = await axios.get(`${backend}/api/v1/profile`, {
+    const res = await axios.get(`/api/v1/profile`, {
       withCredentials: true,
     });
 
@@ -98,7 +98,7 @@ const Dashboard = () => {
 
   const handlelogout = async () => {
     try {
-      const res = await axios.post(`${backend}/api/v1/logout`, null, {
+      const res = await axios.post(`/api/v1/logout`, null, {
         withCredentials: true,
       });
       if (res.status === 200) {
@@ -117,7 +117,7 @@ const Dashboard = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post(`${backend}/api/v1/jobs`, {
+      const res = await axios.post(`/api/v1/jobs`, {
         searching,
         jobType: selectedFilters.jobType,
         location: selectedFilters.location,
@@ -134,7 +134,7 @@ const Dashboard = () => {
     setBackbtn(false);
 
     try {
-      const searchedJobs = await axios.get(`${backend}/api/v1/jobs/search`, {
+      const searchedJobs = await axios.get(`/api/v1/jobs/search`, {
         params: {
           searching,
           jobType: selectedFilters.jobType,
@@ -168,7 +168,7 @@ const Dashboard = () => {
     const loadSavedJobs = async () => {
       try {
         setLoadingJobs(true);
-        const res = await axios.get(`${backend}/api/v1/savejob`, {
+        const res = await axios.get(`/api/v1/savejob`, {
           withCredentials: true,
         });
         setSaveJob(res.data?.jobs ?? []);

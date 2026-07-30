@@ -76,7 +76,7 @@ const Register = () => {
 
     try {
       const res = await axios.post(
-        `${backend}/api/v1/register`,
+        `/api/v1/register`,
         {
           username,
           email,
@@ -116,7 +116,7 @@ const Register = () => {
 
       // Save Google user to MongoDB
       const res = await axios.post(
-        `${backend}/api/v1/register-google`,
+        `/api/v1/register-google`,
         {
           email: user.email,
           username: user.displayName || user.email.split("@")[0],

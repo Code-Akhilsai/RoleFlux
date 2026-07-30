@@ -84,13 +84,13 @@ const Profile = () => {
         setError("");
 
         // Fetch user profile
-        const res = await axios.get(`${backend}/api/v1/profile`, {
+        const res = await axios.get(`/api/v1/profile`, {
           withCredentials: true,
         });
         setData(res.data.user ?? {});
 
         // Fetch saved jobs
-        const jobsRes = await axios.get(`${backend}/api/v1/savejob`, {
+        const jobsRes = await axios.get(`/api/v1/savejob`, {
           withCredentials: true,
         });
 
@@ -112,7 +112,7 @@ const Profile = () => {
 
   const handlelogout = async () => {
     try {
-      const res = await axios.post(`${backend}/api/v1/logout`, null, {
+      const res = await axios.post(`/api/v1/logout`, null, {
         withCredentials: true,
       });
       if (res.status === 200) {
@@ -136,7 +136,7 @@ const Profile = () => {
       setSavedJobs(updatedSavedJobs);
 
       // Get original jobs from backend
-      const jobsRes = await axios.get(`${backend}/api/v1/savejob`, {
+      const jobsRes = await axios.get(`/api/v1/savejob`, {
         withCredentials: true,
       });
       const originalJobs = jobsRes.data?.jobs ?? [];
@@ -148,7 +148,7 @@ const Profile = () => {
 
       // Update backend with filtered jobs
       await axios.post(
-        `${backend}/api/v1/savejob`,
+        `/api/v1/savejob`,
         { jobs: filteredJobs },
         { withCredentials: true },
       );
@@ -158,7 +158,7 @@ const Profile = () => {
       console.error("Error unsaving job:", error);
       // Restore the job if request fails
       try {
-        const jobsRes = await axios.get(`${backend}/api/v1/savejob`, {
+        const jobsRes = await axios.get(`/api/v1/savejob`, {
           withCredentials: true,
         });
         const jobs = jobsRes.data?.jobs ?? [];

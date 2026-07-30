@@ -61,7 +61,7 @@ const Login = () => {
     setErrors({});
 
     const res = await axios.post(
-      `${backend}/api/v1/login`,
+      "/api/v1/login",
       {
         email,
         password,
@@ -87,7 +87,7 @@ const Login = () => {
       const idToken = await user.getIdToken();
 
       const res = await axios.post(
-        `${backend}/api/v1/register-google`,
+        "/api/v1/register-google",
         {
           email: user.email,
           username: user.displayName || user.email.split("@")[0],
