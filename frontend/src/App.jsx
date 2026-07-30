@@ -16,7 +16,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
-      <Route path="*" element={<NotFound />} />
+
       <Route
         path="/dashboard"
         element={
@@ -33,6 +33,7 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
