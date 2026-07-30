@@ -5,7 +5,7 @@ import axios from "axios";
 const backend = import.meta.env.VITE_BACKEND_URL;
 
 const ProtectedRoute = ({ children }) => {
-  const [status, setStatus] = useState("checking"); // checking, authed, guest
+  const [status, setStatus] = useState("checking");
 
   useEffect(() => {
     axios

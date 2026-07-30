@@ -18,7 +18,7 @@ const searchController = async (req, res) => {
     url: "https://jsearch.p.rapidapi.com/search-v2",
     params: {
       query,
-      num_pages: "2",
+      num_pages: "3",
       country: "in",
       date_posted: "month",
       employment_types: employmentTypes,
