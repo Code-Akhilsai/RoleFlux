@@ -1,6 +1,6 @@
 import { User } from "../models/user.models.js";
 import jwt from "jsonwebtoken";
-import { sendVerificationEmail } from "./verifyEmailController.js";
+import { sendVerificationEmail } from "../controllers/verifyemail.controllers.js";
 
 const registerGoogleController = async (req, res) => {
   const { email, username, firebaseUid } = req.body;
