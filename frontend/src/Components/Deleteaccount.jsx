@@ -18,7 +18,7 @@ const Deleteaccount = () => {
 
       console.log(res);
 
-      if (!res.status === 200) return alert("Fail to delete the account");
+      if (res.status !== 200) return alert("Failed to delete the account");
 
       nav("/", { replace: true });
     } catch (error) {
