@@ -67,7 +67,7 @@ const verifyEmailController = async (req, res) => {
     const user = await User.findByIdAndUpdate(
       decoded.userId,
       { isEmailVerified: true },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     if (!user) {

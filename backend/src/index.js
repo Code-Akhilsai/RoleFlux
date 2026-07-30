@@ -14,6 +14,7 @@ import search_router from "../routes/search.routes.js";
 import savedjobs_Router from "../routes/savedjobs.routes.js";
 import google_Router from "../routes/google.routes.js";
 import analyseATS_Router from "../routes/analyseATS.routes.js";
+import delete_Router from "../routes/deleteacc.routes.js";
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use("/api/v1", search_router);
 app.use("/api/v1", savedjobs_Router);
 app.use("/api/v1", google_Router);
 app.use("/api/v1", analyseATS_Router);
+app.use("/api/v1", delete_Router);
 
 await dbconnection();
 app.listen(port, () =>

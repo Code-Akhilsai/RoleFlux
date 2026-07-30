@@ -27,6 +27,8 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
 
+    firebaseUid: { type: String, default: null },
+
     atsScore: {
       type: Number,
     },

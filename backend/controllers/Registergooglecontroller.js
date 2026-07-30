@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { sendVerificationEmail } from "./verifyEmailController.js";
 
 const registerGoogleController = async (req, res) => {
-  const { email, username } = req.body;
+  const { email, username, firebaseUid } = req.body;
 
   try {
     if (!email || !username) {
@@ -51,12 +51,11 @@ const registerGoogleController = async (req, res) => {
       }
     }
 
-    //  Create new user with Google profile photo (not verified yet)
     user = await User.create({
       username: username + "_" + Date.now().toString().slice(-4),
       email,
       password: jwt.sign({ email }, process.env.SECREATE_KEY),
-
+      firebaseUid,
       isEmailVerified: false,
     });
 

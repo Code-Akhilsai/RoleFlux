@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import ATSScoreChecker from "../Components/ATSScoreChecker";
+import Deleteaccount from "../Components/Deleteaccount";
 
 const backend = import.meta.env.VITE_BACKEND_URL;
 
@@ -433,6 +434,9 @@ const Profile = () => {
           </section>
 
           <ATSScoreChecker score={data.atsScore} />
+          <br />
+
+          <Deleteaccount />
         </main>
       </div>
     </div>
