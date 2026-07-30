@@ -20,7 +20,7 @@ const sendVerificationEmail = async (email, token) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
-    subject: "Verify Your RoleFlux Account 🚀",
+    subject: `Verify Your RoleFlux Account`,
     html: `
       <div style="font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; border-radius: 8px;">
         <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px;">
