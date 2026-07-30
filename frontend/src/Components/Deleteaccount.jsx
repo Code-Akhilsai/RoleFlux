@@ -12,7 +12,7 @@ const Deleteaccount = () => {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      const res = await axios.delete(`/api/v1/delete-account`, {
+      const res = await axios.delete(`${backend}/api/v1/delete-account`, {
         withCredentials: true,
       });
 

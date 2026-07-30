@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get(`/api/v1/me`, { withCredentials: true })
+      .get(`${backend}/api/v1/me`, { withCredentials: true })
       .then(() => setStatus("authed"))
       .catch(() => setStatus("guest"));
   }, []);
