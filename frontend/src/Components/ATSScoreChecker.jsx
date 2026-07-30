@@ -36,7 +36,7 @@ const ATSScoreChecker = ({ score }) => {
 
     try {
       const res = await axios.post(
-        `${backend}/api/v1/analyze-resume`,
+        `/api/v1/analyze-resume`,
         formData,
 
         {
