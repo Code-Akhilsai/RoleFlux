@@ -1,6 +1,6 @@
 import { User } from "../models/user.models.js";
 import jwt from "jsonwebtoken";
-import { sendVerificationEmail } from "../controllers/verifyemail.controllers.js";
+import { sendVerificationEmail } from "./verifyEmailController.js";
 
 const registerGoogleController = async (req, res) => {
   const { email, username, firebaseUid } = req.body;
@@ -42,7 +42,10 @@ const registerGoogleController = async (req, res) => {
           { expiresIn: "24h" },
         );
 
-        await sendVerificationEmail(email, verificationToken);
+        // fire and forget — don't block the response on email sending
+        sendVerificationEmail(email, verificationToken).catch((err) =>
+          console.error("Background email send failed:", err),
+        );
 
         return res.status(200).json({
           message: "Check your email to verify your account",
@@ -51,6 +54,7 @@ const registerGoogleController = async (req, res) => {
       }
     }
 
+    // Create new user (not verified yet)
     user = await User.create({
       username: username + "_" + Date.now().toString().slice(-4),
       email,
@@ -65,6 +69,7 @@ const registerGoogleController = async (req, res) => {
       { expiresIn: "24h" },
     );
 
+    // fire and forget — don't block the response on email sending
     sendVerificationEmail(email, verificationToken).catch((err) =>
       console.error("Background email send failed:", err),
     );
