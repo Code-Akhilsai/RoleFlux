@@ -7,6 +7,7 @@ import Dashboard from "./Pages/Dashboard.jsx";
 import Profile from "./Pages/Profile.jsx";
 import VerifyEmail from "./Pages/VerifyEmail.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import NotFound from "./Pages/NotFound.jsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="*" element={<NotFound />} />
       <Route
         path="/dashboard"
         element={
