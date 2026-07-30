@@ -3,7 +3,7 @@ import registerGoogleController from "../controllers/Registergooglecontroller.js
 import {
   verifyEmailController,
   resendVerificationController,
-} from "../controllers/verifyEmailController.js";
+} from "../controllers/verifyemail.controllers.js";
 
 const google_Router = Router();
 
