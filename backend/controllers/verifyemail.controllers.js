@@ -10,7 +10,7 @@ const sendVerificationEmail = async (email, token) => {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: "RoleFlux <codeakhilsai@gmail.com>",
+      from: "RoleFlux <noreply@verify.roleflux.tech>",
       to: email,
       subject: "Verify Your RoleFlux Account - Action Required",
       html: `
