@@ -38,7 +38,9 @@ const registerController = async (req, res) => {
       { expiresIn: "24h" },
     );
 
-    await sendVerificationEmail(email, verificationToken);
+    sendVerificationEmail(email, verificationToken).catch((err) =>
+      console.error("Background email send failed:", err),
+    );
 
     return res.status(200).json({
       message: "Registration successful! Check your email to verify.",

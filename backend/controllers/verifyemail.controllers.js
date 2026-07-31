@@ -125,7 +125,9 @@ const resendVerificationController = async (req, res) => {
     );
 
     // Send verification email
-    await sendVerificationEmail(email, verificationToken);
+    sendVerificationEmail(email, verificationToken).catch((err) =>
+      console.error("Background email send failed:", err),
+    );
 
     return res
       .status(200)

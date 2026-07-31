@@ -22,7 +22,7 @@ const VerifyEmail = () => {
       }
 
       try {
-        const res = await axios.get(`${backend}/api/v1/verify-email`, {
+        const res = await axios.get(`/api/v1/verify-email`, {
           params: { token },
           withCredentials: true,
         });
