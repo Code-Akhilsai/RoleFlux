@@ -1,59 +1,54 @@
 import { User } from "../models/user.models.js";
 import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-dotenv.config();
+import { Resend } from "resend";
 
-// Configure email transporter
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Send Verification Email
 const sendVerificationEmail = async (email, token) => {
   const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${token}`;
 
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: `Verify Your RoleFlux Account`,
-    html: `
-      <div style="font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; border-radius: 8px;">
-        <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px;">
-          <h2 style="color: #333; text-align: center;">Welcome to RoleFlux!</h2>
-          <p style="color: #666; text-align: center; margin: 20px 0;">
-            Click the button below to verify your email address.
-          </p>
-          <div style="text-align: center; margin: 30px 0;">
-            <a href="${verificationLink}" style="background: #6366f1; color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: bold;">
-              Verify Email
-            </a>
-          </div>
-          <p style="color: #999; font-size: 12px; text-align: center;">
-            Or copy this link: ${verificationLink}
-          </p>
-          <p style="color: #999; font-size: 12px; text-align: center; margin-top: 20px;">
-            This link expires in 24 hours.
-          </p>
-        </div>
-      </div>
-    `,
-  };
-
   try {
-    await transporter.sendMail(mailOptions);
-    console.log("Verification email sent to:", email);
+    const { data, error } = await resend.emails.send({
+      from: "RoleFlux <onboarding@resend.dev>",
+      to: email,
+      subject: "Verify Your RoleFlux Account - Action Required",
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; border-radius: 8px;">
+          <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px;">
+            <h2 style="color: #333; text-align: center;">Welcome to RoleFlux!</h2>
+            <p style="color: #666; text-align: center; margin: 20px 0;">
+              Click the button below to verify your email address.
+            </p>
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="${verificationLink}" style="background: #6366f1; color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+                Verify Email
+              </a>
+            </div>
+            <p style="color: #999; font-size: 12px; text-align: center;">
+              Or copy this link: ${verificationLink}
+            </p>
+            <p style="color: #999; font-size: 12px; text-align: center; margin-top: 20px;">
+              This link expires in 24 hours.
+            </p>
+          </div>
+        </div>
+      `,
+    });
+
+    if (error) {
+      console.error("Resend email error:", error);
+      throw error;
+    }
+
+    console.log("Verification email sent to:", email, "id:", data?.id);
   } catch (error) {
     console.error("Email send error:", error);
     throw error;
   }
 };
 
-// Verify Email Token
+// Rest of file stays exactly the same — verifyEmailController, resendVerificationController
 const verifyEmailController = async (req, res) => {
   const { token } = req.query;
 
@@ -99,7 +94,6 @@ const verifyEmailController = async (req, res) => {
   }
 };
 
-// Resend Verification Email
 const resendVerificationController = async (req, res) => {
   const { email } = req.body;
 
@@ -124,10 +118,7 @@ const resendVerificationController = async (req, res) => {
       { expiresIn: "24h" },
     );
 
-    // Send verification email
-    sendVerificationEmail(email, verificationToken).catch((err) =>
-      console.error("Background email send failed:", err),
-    );
+    await sendVerificationEmail(email, verificationToken);
 
     return res
       .status(200)
