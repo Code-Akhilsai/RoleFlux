@@ -1,4 +1,4 @@
-const menuItems = ["Profile", "Notifications", "Settings", "Logout"];
+const menuItems = ["Profile", "Logout"];
 
 const Profilebox = ({ profileNav, handlelogout }) => {
   return (
