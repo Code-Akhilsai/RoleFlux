@@ -359,27 +359,30 @@ const Home = () => {
             <nav className="flex flex-wrap justify-center sm:justify-start gap-6 sm:gap-8 text-sm sm:text-base">
               <a
                 href="/about"
+                target="_blank"
                 className="text-white/70 transition hover:text-white"
               >
                 About
               </a>
 
               <a
-                href="/privacy-policy"
+                href="https://www.termsfeed.com/live/2fc5155c-fcf2-48e6-a788-4f88d2c95c0b"
+                target="_blank"
                 className="text-white/70 transition hover:text-white"
               >
                 Privacy Policy
               </a>
 
               <a
-                href="/terms-and-conditions"
+                href="/terms.html"
+                target="_blank"
                 className="text-white/70 transition hover:text-white"
               >
                 Terms & Conditions
               </a>
 
               <a
-                href="mailto:contact@roleflux.in"
+                href="mailto:codeakhilsai@gmail.com"
                 className="text-white/70 transition hover:text-white"
               >
                 Contact
