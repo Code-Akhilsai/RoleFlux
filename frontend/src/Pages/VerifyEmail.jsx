@@ -3,8 +3,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CheckCircle, XCircle, Loader } from "lucide-react";
 
-const backend = import.meta.env.VITE_BACKEND_URL;
-
 const VerifyEmail = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();

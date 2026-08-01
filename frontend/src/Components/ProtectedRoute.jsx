@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 
-const backend = import.meta.env.VITE_BACKEND_URL;
-
 const ProtectedRoute = ({ children }) => {
   const [status, setStatus] = useState("checking");
 

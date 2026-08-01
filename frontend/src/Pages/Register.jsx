@@ -10,8 +10,6 @@ import { IoCheckbox } from "react-icons/io5";
 
 const auth = getAuth(app);
 
-const backend = import.meta.env.VITE_BACKEND_URL;
-
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");

@@ -8,7 +8,6 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import app from "../firebase.js";
 
 const auth = getAuth(app);
-const backend = import.meta.env.VITE_BACKEND_URL;
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);

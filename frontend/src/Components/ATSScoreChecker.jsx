@@ -9,8 +9,6 @@ import {
 } from "lucide-react";
 import axios from "axios";
 
-const backend = import.meta.env.VITE_BACKEND_URL;
-
 const ATSScoreChecker = ({ score }) => {
   const [resumeFile, setResumeFile] = useState(null);
   const [atsScore, setATSScore] = useState(score ?? null);

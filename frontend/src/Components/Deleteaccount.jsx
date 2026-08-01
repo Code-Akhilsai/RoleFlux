@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Trash2, TriangleAlert } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const backend = import.meta.env.VITE_BACKEND_URL;
 
 const Deleteaccount = () => {
   const [confirming, setConfirming] = useState(false);
