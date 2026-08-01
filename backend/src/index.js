@@ -36,6 +36,10 @@ app.use((req, res, next) => {
 });
 app.use(cookieParser());
 
+app.get("/", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 //routes
 
 app.use("/api/v1", router);
