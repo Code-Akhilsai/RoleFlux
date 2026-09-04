@@ -204,7 +204,7 @@ const Dashboard = () => {
         console.log("Saving:", jobsToSave);
 
         await axios.post(
-          `${backend}/api/v1/savejob`,
+          `/api/v1/savejob`,
           { jobs: jobsToSave },
           { withCredentials: true },
         );
