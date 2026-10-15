@@ -1,9 +1,16 @@
 import { createClient } from "redis";
 
-const client = await createClient({
+const client = createClient({
   url: process.env.REDIS_URL_KEY,
-})
-  .on("error", (err) => console.log("Redis Client Error", err))
-  .connect();
+  socket: {
+    keepAlive: 30000,
+    reconnectStrategy: (retries) => Math.min(retries * 100, 3000),
+  },
+  pingInterval: 40000,
+});
+
+client.on("error", (err) => console.log("Redis Client Error", err));
+
+await client.connect();
 
 export default client;

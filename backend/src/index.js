@@ -16,6 +16,8 @@ import google_Router from "../routes/google.routes.js";
 import analyseATS_Router from "../routes/analyseATS.routes.js";
 import delete_Router from "../routes/deleteacc.routes.js";
 import checkAuth_Router from "../routes/checkAuth.routes.js";
+import mongoose from "mongoose";
+import client from "../db/redis.js";
 
 const app = express();
 
@@ -38,6 +40,17 @@ app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.status(200).json({ status: "ok" });
+});
+
+app.get("/api/v1/health", async (req, res) => {
+  try {
+    await client.ping();
+    await mongoose.connection.db.admin().ping();
+    res.status(200).send("ok");
+  } catch (e) {
+    console.error("Health check failed:", e);
+    res.status(500).send("fail");
+  }
 });
 
 //routes
