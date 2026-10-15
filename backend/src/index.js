@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
 });
 
 //routes
-
+app.set("trust proxy", 1);
 app.use("/api/v1", router);
 app.use("/api/v1", Profile_router);
 app.use("/api/v1", Login_router);

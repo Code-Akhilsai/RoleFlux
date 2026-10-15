@@ -30,7 +30,7 @@ const VerifyEmail = () => {
           setMessage("Email verified successfully!");
 
           setTimeout(() => {
-            navigate("/dashboard", { replace: true });
+            window.location.replace("/dashboard");
           }, 2000);
         }
       } catch (error) {
